@@ -62,17 +62,8 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/logofix"
+                    android:src="@drawable/ic_gempa"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Text"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -101,17 +92,8 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/logofix"
+                    android:src="@drawable/ic_kebakaran"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Text2"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -143,17 +125,8 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/logofix"
+                    android:src="@drawable/ic_banjir"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Text3"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -182,17 +155,8 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/logofix"
+                    android:src="@drawable/ic_longsor"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Text4"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -223,17 +187,8 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/logofix"
+                    android:src="@drawable/ic_erupsi"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Text"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -262,19 +217,10 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/logofix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Text2"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:src="@drawable/ic_lain" />
 
             </LinearLayout>
 

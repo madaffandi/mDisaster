@@ -77,11 +77,21 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/tv_lokKejadian"
+                        android:id="@+id/tv_latlongLokasi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="kelurahan, kecamatan, regional"
+                        android:text="Latitude, Longitude"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_alamatLokasi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Alamat"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
@@ -97,43 +107,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Jenis Bahaya"
+                        android:text="Akses Transportasi"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/tv_jenisBahaya"
+                        android:id="@+id/tv_aksesTransportasi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="bahaya"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Keterangan Lain"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tv_ketLain"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="keterangan"
+                        android:text="Akses"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />

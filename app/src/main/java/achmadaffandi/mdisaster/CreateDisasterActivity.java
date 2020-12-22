@@ -1,12 +1,15 @@
 package achmadaffandi.mdisaster;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,7 +41,7 @@ import achmadaffandi.mdisaster.Model.DisasterData;
 public class CreateDisasterActivity extends AppCompatActivity {
 
     private Button btn_backInitateDis, btn_createDis, btn_toDisLoc;
-    private EditText et_cd_calendar;
+    private EditText et_cd_calendar, et_jenisBencana;
     private AutoCompleteTextView ac_aksestrans, ac_alattrans;
     private String[] arrAksesTrans, arrAlatTrans;
     private String jenisBencana, tglKejadian, latLokasi, longLokasi, alamat, kabupaten, aksesTrans, alatTrans;
@@ -63,11 +66,18 @@ public class CreateDisasterActivity extends AppCompatActivity {
         tvLatLok = (TextView) findViewById(R.id.tv_lat);
         tvLongLok = (TextView) findViewById(R.id.tv_lng);
         tvAlamat = (TextView) findViewById(R.id.tv_alamat);
+        et_jenisBencana = (EditText) findViewById(R.id.et_jenisBencana);
 
         Intent i = getIntent();
         String disType = i.getStringExtra(InitiateDisasterActivity.KEY_DISTYPE);
-        setJenisBencana(disType);
-        tvDisType.setText(disType);
+        if (disType != "Lain-lain") {
+            setJenisBencana(disType);
+            tvDisType.setText(disType);
+            et_jenisBencana.setVisibility(View.INVISIBLE);
+        } else {
+            tvDisType.setVisibility(View.INVISIBLE);
+            setJenisBencana(et_jenisBencana.getText().toString());
+        }
 
         et_cd_calendar.setInputType(InputType.TYPE_NULL);
         et_cd_calendar.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +119,13 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 }
             }
         });
+        ac_aksestrans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+            }
+        });
 
         ArrayAdapter<String> adapAlatTrans = new ArrayAdapter<String>(CreateDisasterActivity.this,
                 android.R.layout.simple_list_item_1, arrAlatTrans);
@@ -120,6 +137,13 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 if (hasFocus) {
                     ac_alattrans.showDropDown();
                 }
+            }
+        });
+        ac_alattrans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
             }
         });
 

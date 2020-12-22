@@ -58,7 +58,7 @@ public class DisListActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(DisList_Holder viewHolder, DisasterData model, int position) {
                 viewHolder.setTitle(model.getJenisBencana());
-                viewHolder.setDesc("Terjadi: " + model.getTanggalKejadian() + ", Akses Transportasi: " + model.getAksesTransportasi() + model.getAlatTransportasi());
+                viewHolder.setDesc(model.getKabupaten() + ", " + model.getTanggalKejadian() + ", " + model.getAksesTransportasi() + ", " + model.getAlatTransportasi());
                 viewHolder.setImage(getApplicationContext(), model.getImageId());
             }
 
@@ -68,7 +68,9 @@ public class DisListActivity extends AppCompatActivity {
                 viewHolder.setOnClickListener(new DisList_Holder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(DisListActivity.this, "Item clicked at " + position, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(DisListActivity.this, "Item clicked at " + position, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DisListActivity.this, DisDetailActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
