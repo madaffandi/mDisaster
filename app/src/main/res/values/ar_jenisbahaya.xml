@@ -1,11 +1,14 @@
 <resources>
-    <string-array name="jenis_bahaya">
-        <item>Api</item>
-        <item>Bahan kimia</item>
-        <item>Biologi</item>
-        <item>Radiasi</item>
-        <item>Nuklir</item>
-        <item>Bangunan runtuh</item>
-        <item>Lain-lain</item>
+    <string-array name="akses_trans">
+        <item>Darat</item>
+        <item>Air</item>
+        <item>Udara</item>
+    </string-array>
+    <string-array name="alat_trans">
+        <item>Motor</item>
+        <item>Mobil</item>
+        <item>Truck</item>
+        <item>Kapal</item>
+        <item>Helikopter</item>
     </string-array>
 </resources>

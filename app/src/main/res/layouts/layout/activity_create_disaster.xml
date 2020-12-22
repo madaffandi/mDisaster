@@ -117,6 +117,36 @@
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
+                    <TextView
+                        android:id="@+id/tv_lat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Latitude"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_lng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Longitude"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_alamat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Alamat"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,13 +159,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Jenis Bahaya"
+                        android:text="Akses Transportasi"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
                     <AutoCompleteTextView
-                        android:id="@+id/cd_jenisbahaya"
+                        android:id="@+id/cd_aksestrans"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -144,7 +174,7 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
-                        android:autofillHints="Api, Biologi, Radiasi.."
+                        android:autofillHints="Darat, Air, Laut"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -158,13 +188,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Keterangan Lain"
+                        android:text="Alat Transportasi"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
-                    <EditText
-                        android:id="@+id/et_ketLainCreateDis"
+                    <AutoCompleteTextView
+                        android:id="@+id/cd_alattrans"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -173,6 +203,7 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
+                        android:autofillHints="Motor, Truck, Mobil"
                         android:textSize="15sp" />
                 </LinearLayout>
 

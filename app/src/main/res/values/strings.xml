@@ -10,5 +10,5 @@
     <string name="registration_success">Selamat! Anda telah terdaftar</string>
     <string name="registration_failed">ada kesalahan, silakan ulangi kembali</string>
     <string name="login_failed">ada kesalahan, silakan ulangi kembali</string>
-    <string name="map_key" translatable="false">AIzaSyBXPKp0AOqjVj0Y2_Vl1z8CnnU7uNfQZTo</string>
+    <string name="map_key" translatable="false">AIzaSyBAS2_0xGKXQ5EKyAmflvRPsC4XCETnhFM</string>
 </resources>

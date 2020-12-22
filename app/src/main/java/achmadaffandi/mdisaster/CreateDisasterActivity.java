@@ -1,9 +1,9 @@
 package achmadaffandi.mdisaster;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -15,23 +15,37 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import achmadaffandi.mdisaster.Model.DisasterData;
 
 public class CreateDisasterActivity extends AppCompatActivity {
 
     private Button btn_backInitateDis, btn_createDis, btn_toDisLoc;
-    private EditText et_cd_calendar, et_ketLainDis;
-    private AutoCompleteTextView ac_jenisbahaya;
-    private String[] arrJenisBahaya;
-    private String ketLainDis, jenisBahaya, jenisBencana, tglKejadian, lokKejadian;
+    private EditText et_cd_calendar;
+    private AutoCompleteTextView ac_aksestrans, ac_alattrans;
+    private String[] arrAksesTrans, arrAlatTrans;
+    private String jenisBencana, tglKejadian, latLokasi, longLokasi, alamat, kabupaten, aksesTrans, alatTrans;
     private DatabaseReference mDatabase;
-    private TextView tvDisType;
+    private TextView tvDisType, tvLatLok, tvLongLok, tvAlamat;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +54,15 @@ public class CreateDisasterActivity extends AppCompatActivity {
         btn_backInitateDis = (Button) findViewById(R.id.btn_backInitiateDis);
         btn_createDis = (Button) findViewById(R.id.btn_createDis);
         et_cd_calendar = (EditText) findViewById(R.id.et_cd_calendar);
-        ac_jenisbahaya = (AutoCompleteTextView) findViewById(R.id.cd_jenisbahaya);
-        arrJenisBahaya = getResources().getStringArray(R.array.jenis_bahaya);
-        et_ketLainDis = (EditText) findViewById(R.id.et_ketLainCreateDis);
+        ac_aksestrans = (AutoCompleteTextView) findViewById(R.id.cd_aksestrans);
+        arrAksesTrans = getResources().getStringArray(R.array.akses_trans);
+        ac_alattrans = (AutoCompleteTextView) findViewById(R.id.cd_alattrans);
+        arrAlatTrans = getResources().getStringArray(R.array.alat_trans);
         btn_toDisLoc = (Button) findViewById(R.id.btn_toDisLoc);
         tvDisType = (TextView) findViewById(R.id.tv_distype);
+        tvLatLok = (TextView) findViewById(R.id.tv_lat);
+        tvLongLok = (TextView) findViewById(R.id.tv_lng);
+        tvAlamat = (TextView) findViewById(R.id.tv_alamat);
 
         Intent i = getIntent();
         String disType = i.getStringExtra(InitiateDisasterActivity.KEY_DISTYPE);
@@ -62,20 +80,45 @@ public class CreateDisasterActivity extends AppCompatActivity {
         btn_toDisLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CreateDisasterActivity.this, MapLocation.class);
-                startActivity(i);
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build(CreateDisasterActivity.this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        ArrayAdapter<String> adapJeniSBahaya = new ArrayAdapter<String>(CreateDisasterActivity.this,
-                android.R.layout.simple_list_item_1, arrJenisBahaya);
-        ac_jenisbahaya.setAdapter(adapJeniSBahaya);
-        ac_jenisbahaya.setThreshold(1);
-        ac_jenisbahaya.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        tvLatLok.setText(getLatLokasi());
+        tvLongLok.setText(getLongLokasi());
+        tvAlamat.setText(getAlamat());
+
+        ArrayAdapter<String> adapAksesTrans = new ArrayAdapter<String>(CreateDisasterActivity.this,
+                android.R.layout.simple_list_item_1, arrAksesTrans);
+        ac_aksestrans.setAdapter(adapAksesTrans);
+        ac_aksestrans.setThreshold(1);
+        ac_aksestrans.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ac_jenisbahaya.showDropDown();
+                    ac_aksestrans.showDropDown();
+                }
+            }
+        });
+
+        ArrayAdapter<String> adapAlatTrans = new ArrayAdapter<String>(CreateDisasterActivity.this,
+                android.R.layout.simple_list_item_1, arrAlatTrans);
+        ac_alattrans.setAdapter(adapAlatTrans);
+        ac_alattrans.setThreshold(1);
+        ac_alattrans.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    ac_alattrans.showDropDown();
                 }
             }
         });
@@ -115,10 +158,10 @@ public class CreateDisasterActivity extends AppCompatActivity {
     }
 
     public void createNewDisaster() {
-        setKetLainDis(et_ketLainDis.getText().toString());
-        setJenisBahaya(ac_jenisbahaya.getText().toString());
+        setAksesTrans(ac_aksestrans.getText().toString());
+        setAlatTrans(ac_alattrans.getText().toString());
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster").push();
-        DisasterData dData = new DisasterData(getJenisBencana(), getTglKejadian(), getJenisBahaya(), getKetLainDis());
+        DisasterData dData = new DisasterData(getJenisBencana(), getTglKejadian(), getLatLokasi(), getLongLokasi(), getAlamat(), getKabupaten(), getAksesTrans(), getAlatTrans());
         mDatabase.setValue(dData);
         Toast.makeText(CreateDisasterActivity.this, "Data bencana baru telah ditambahkan", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(CreateDisasterActivity.this, DisListActivity.class);
@@ -126,20 +169,79 @@ public class CreateDisasterActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public String getKetLainDis() {
-        return ketLainDis;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                if (place != null) {
+                    try {
+                        Geocoder geocoder = new Geocoder(CreateDisasterActivity.this,
+                                Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(
+                                place.getLatLng().latitude, place.getLatLng().longitude, 1
+                        );
+                        setLatLokasi(String.valueOf(addresses.get(0).getLatitude()));
+                        setLongLokasi(String.valueOf(addresses.get(0).getLongitude()));
+                        setAlamat(String.valueOf(addresses.get(0).getAddressLine(0)));
+                        setKabupaten(String.valueOf(addresses.get(0).getLocality()));
+                        tvLatLok.setText(getLongLokasi());
+                        tvLongLok.setText(getLatLokasi());
+                        tvAlamat.setText(getAlamat());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
-    public void setKetLainDis(String ketLainDis) {
-        this.ketLainDis = ketLainDis;
+    public String getKabupaten() {
+        return kabupaten;
     }
 
-    public String getJenisBahaya() {
-        return jenisBahaya;
+    public void setKabupaten(String kabupaten) {
+        this.kabupaten = kabupaten;
     }
 
-    public void setJenisBahaya(String jenisBahaya) {
-        this.jenisBahaya = jenisBahaya;
+    public String getLatLokasi() {
+        return latLokasi;
+    }
+
+    public void setLatLokasi(String latLokasi) {
+        this.latLokasi = latLokasi;
+    }
+
+    public String getLongLokasi() {
+        return longLokasi;
+    }
+
+    public void setLongLokasi(String longLokasi) {
+        this.longLokasi = longLokasi;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+
+    public String getAksesTrans() {
+        return aksesTrans;
+    }
+
+    public void setAksesTrans(String aksesTrans) {
+        this.aksesTrans = aksesTrans;
+    }
+
+    public String getAlatTrans() {
+        return alatTrans;
+    }
+
+    public void setAlatTrans(String alatTrans) {
+        this.alatTrans = alatTrans;
     }
 
     public String getJenisBencana() {
@@ -158,11 +260,4 @@ public class CreateDisasterActivity extends AppCompatActivity {
         this.tglKejadian = tglKejadian;
     }
 
-    public String getLokKejadian() {
-        return lokKejadian;
-    }
-
-    public void setLokKejadian(String lokKejadian) {
-        this.lokKejadian = lokKejadian;
-    }
 }

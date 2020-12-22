@@ -2,7 +2,7 @@ package achmadaffandi.mdisaster.Model;
 
 public class DisasterData {
     private String title, description, imageId;
-    private String jenisBencana, lokasiKejadian, tanggalKejadian, jenisBahaya, keteranganLain;
+    private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi;
 
     public DisasterData(String title, String description, String imageId) {
         this.title = title;
@@ -10,16 +10,28 @@ public class DisasterData {
         this.imageId = imageId;
     }
 
-    public DisasterData(String jenisBencana, String tanggalKejadian, String jenisBahaya, String keteranganLain){
+    public DisasterData(String jenisBencana, String tanggalKejadian, String latLokasi,
+                        String longLokasi, String alamat, String kabupaten, String aksesTransportasi, String alatTransportasi){
         this.jenisBencana = jenisBencana;
-        //this.lokasiKejadian = lokasiKejadian;
+        this.latLokasi = latLokasi;
+        this.longLokasi = longLokasi;
+        this.alamat = alamat;
+        this.kabupaten = kabupaten;
         this.tanggalKejadian = tanggalKejadian;
-        this.jenisBahaya = jenisBahaya;
-        this.keteranganLain = keteranganLain;
+        this.aksesTransportasi = aksesTransportasi;
+        this.alatTransportasi = alatTransportasi;
     }
 
     public DisasterData() {
 
+    }
+
+    public String getKabupaten() {
+        return kabupaten;
+    }
+
+    public void setKabupaten(String kabupaten) {
+        this.kabupaten = kabupaten;
     }
 
     public String getJenisBencana() {
@@ -30,12 +42,28 @@ public class DisasterData {
         this.jenisBencana = jenisBencana;
     }
 
-    public String getLokasiKejadian() {
-        return lokasiKejadian;
+    public String getLatLokasi() {
+        return latLokasi;
     }
 
-    public void setLokasiKejadian(String lokasiKejadian) {
-        this.lokasiKejadian = lokasiKejadian;
+    public void setLatLokasi(String latLokasi) {
+        this.latLokasi = latLokasi;
+    }
+
+    public String getLongLokasi() {
+        return longLokasi;
+    }
+
+    public void setLongLokasi(String longLokasi) {
+        this.longLokasi = longLokasi;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 
     public String getTanggalKejadian() {
@@ -46,20 +74,20 @@ public class DisasterData {
         this.tanggalKejadian = tanggalKejadian;
     }
 
-    public String getJenisBahaya() {
-        return jenisBahaya;
+    public String getAksesTransportasi() {
+        return aksesTransportasi;
     }
 
-    public void setJenisBahaya(String jenisBahaya) {
-        this.jenisBahaya = jenisBahaya;
+    public void setAksesTransportasi(String aksesTransportasi) {
+        this.aksesTransportasi = aksesTransportasi;
     }
 
-    public String getKeteranganLain() {
-        return keteranganLain;
+    public String getAlatTransportasi() {
+        return alatTransportasi;
     }
 
-    public void setKeteranganLain(String keteranganLain) {
-        this.keteranganLain = keteranganLain;
+    public void setAlatTransportasi(String alatTransportasi) {
+        this.alatTransportasi = alatTransportasi;
     }
 
     public String getTitle() {
