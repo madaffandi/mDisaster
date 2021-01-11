@@ -69,7 +69,9 @@ public class DisListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         //Toast.makeText(DisListActivity.this, "Item clicked at " + position, Toast.LENGTH_SHORT).show();
+                        String dis_id = getRef(position).getKey();
                         Intent intent = new Intent(DisListActivity.this, DisDetailActivity.class);
+                        intent.putExtra("dis_id",dis_id);
                         startActivity(intent);
                     }
 

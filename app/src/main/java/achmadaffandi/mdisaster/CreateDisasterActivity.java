@@ -1,15 +1,12 @@
 package achmadaffandi.mdisaster;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -72,7 +69,7 @@ public class CreateDisasterActivity extends AppCompatActivity {
         String disType = i.getStringExtra(InitiateDisasterActivity.KEY_DISTYPE);
         if (disType != "Lain-lain") {
             setJenisBencana(disType);
-            tvDisType.setText(disType);
+            tvDisType.setText(getJenisBencana());
             et_jenisBencana.setVisibility(View.INVISIBLE);
         } else {
             tvDisType.setVisibility(View.INVISIBLE);
@@ -119,13 +116,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 }
             }
         });
-        ac_aksestrans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
-            }
-        });
 
         ArrayAdapter<String> adapAlatTrans = new ArrayAdapter<String>(CreateDisasterActivity.this,
                 android.R.layout.simple_list_item_1, arrAlatTrans);
@@ -137,13 +127,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 if (hasFocus) {
                     ac_alattrans.showDropDown();
                 }
-            }
-        });
-        ac_alattrans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
             }
         });
 

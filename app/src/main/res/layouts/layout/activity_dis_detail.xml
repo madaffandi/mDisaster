@@ -22,17 +22,27 @@
                 android:id="@+id/tv_judulDisaster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Judul Bencana"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
+            <TextView
+                android:layout_below="@+id/tv_judulDisaster"
+                android:id="@+id/tv_subJudulDisaster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Kabupaten"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
             <LinearLayout
                 android:id="@+id/linlay_detaildis1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_judulDisaster"
+                android:layout_below="@+id/tv_subJudulDisaster"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
@@ -45,7 +55,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Tanggal Kejadian"
+                        android:text="Tanggal Kejadian:"
+                        android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
@@ -71,7 +82,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Lokasi Kejadian"
+                        android:text="Lokasi Kejadian:"
+                        android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
@@ -107,7 +119,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Akses Transportasi"
+                        android:text="Akses Transportasi:"
+                        android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
