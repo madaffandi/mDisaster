@@ -27,7 +27,7 @@ public class CreateDetailDisasterActivity extends AppCompatActivity {
     private Button btn_toPengungsi;
     private String DIS_ID, kondisiListrik, kondisiAir, kondisiDrainase, sumberListrik, sumberAir, jumlahJamban;
     private int selectedListrik, selectedAir, selectedDrainase;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase, mDatabaseDis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,11 @@ public class CreateDetailDisasterActivity extends AppCompatActivity {
         rg_drainase = (RadioGroup) findViewById(R.id.rg_drainase);
 
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
-        mDatabase.keepSynced(true);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabaseDis = mDatabase.child("Disaster");
+        mDatabaseDis.keepSynced(true);
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabaseDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -65,7 +66,7 @@ public class CreateDetailDisasterActivity extends AppCompatActivity {
 
             }
         });
-        /*
+
         selectedListrik = rg_listrik.getCheckedRadioButtonId();
         rb_listrik = (RadioButton)findViewById(selectedListrik);
         kondisiListrik = rb_listrik.getText().toString();
@@ -74,29 +75,53 @@ public class CreateDetailDisasterActivity extends AppCompatActivity {
         kondisiAir = rb_air.getText().toString();
         selectedDrainase = rg_drainase.getCheckedRadioButtonId();
         rb_drainase = (RadioButton)findViewById(selectedDrainase);
-        kondisiDrainase = rb_drainase.getText().toString();*/
-        sumberListrik = et_sumberListrik.getText().toString();
-        sumberAir = et_sumberAir.getText().toString();
-        jumlahJamban = et_jamban.getText().toString();
+        kondisiDrainase = rb_drainase.getText().toString();
 
         btn_toPengungsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updateKondisiBencana(DIS_ID, kondisiListrik, sumberListrik, kondisiAir, sumberAir, kondisiDrainase, jumlahJamban);
+                setSumberListrik(et_sumberListrik.getText().toString());
+                setSumberAir(et_sumberAir.getText().toString());
+                setJumlahJamban(et_jamban.getText().toString());
+                updateKondisiBencana(DIS_ID, kondisiListrik, getSumberListrik(), kondisiAir, getSumberAir(), kondisiDrainase, getJumlahJamban());
                 Intent i = new Intent(CreateDetailDisasterActivity.this, DataPengungsiActivity.class);
                 i.putExtra("DIS_ID", DIS_ID);
                 startActivity(i);
             }
         });
     }
-/*    private void updateKondisiBencana(String DIS_ID, String kondisiListrik, String sumberListrik, String kondisiAir, String sumberAir, String kondisiDrainase, String jumlahJamban){
+    private void updateKondisiBencana(String DIS_ID, String kondisiListrik, String sumberListrik, String kondisiAir, String sumberAir, String kondisiDrainase, String jumlahJamban){
         String key = DIS_ID;
-        DisasterData disasterData = new DisasterData(kondisiListrik, sumberListrik, kondisiAir, sumberAir, kondisiDrainase, jumlahJamban);
-        Map<String, Object> dataValues = disasterData.toMap();
+        mDatabase.child("Disaster").child(key).child("kondisiListrik").setValue(kondisiListrik);
+        mDatabase.child("Disaster").child(key).child("sumberListrik").setValue(sumberListrik);
+        mDatabase.child("Disaster").child(key).child("kondisiAir").setValue(kondisiAir);
+        mDatabase.child("Disaster").child(key).child("sumberAir").setValue(sumberAir);
+        mDatabase.child("Disaster").child(key).child("kondisiDrainase").setValue(kondisiDrainase);
+        mDatabase.child("Disaster").child(key).child("jumlahJamban").setValue(jumlahJamban);
+    }
 
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/Disaster/" + key, dataValues);
-        mDatabase.updateChildren(childUpdates);
-    }*/
+    public String getSumberListrik() {
+        return sumberListrik;
+    }
+
+    public void setSumberListrik(String sumberListrik) {
+        this.sumberListrik = sumberListrik;
+    }
+
+    public String getSumberAir() {
+        return sumberAir;
+    }
+
+    public void setSumberAir(String sumberAir) {
+        this.sumberAir = sumberAir;
+    }
+
+    public String getJumlahJamban() {
+        return jumlahJamban;
+    }
+
+    public void setJumlahJamban(String jumlahJamban) {
+        this.jumlahJamban = jumlahJamban;
+    }
 }
 

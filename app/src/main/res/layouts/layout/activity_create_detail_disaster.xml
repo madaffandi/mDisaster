@@ -83,6 +83,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
                             android:text="Ada"
+                            android:checked="true"
                             android:textColor="@color/white"
                             android:buttonTint="@color/white"
                             android:paddingRight="10dp"/>
@@ -156,6 +157,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
                             android:text="Ada"
+                            android:checked="true"
                             android:textColor="@color/white"
                             android:buttonTint="@color/white"
                             android:paddingRight="10dp"/>
@@ -229,6 +231,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
                             android:text="Lancar"
+                            android:checked="true"
                             android:textColor="@color/white"
                             android:buttonTint="@color/white"
                             android:paddingRight="10dp"/>
@@ -276,6 +279,7 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/et_bg"
                         android:fontFamily="sans-serif-light"
+                        android:inputType="number"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
