@@ -13,11 +13,10 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp">
-
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:id="@+id/rellay_datpeng1">
             <TextView
                 android:id="@+id/tv_judulBenPeng"
                 android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
                 android:text="Judul Bencana"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
-
             <TextView
                 android:id="@+id/tv_judulSubBenPeng"
                 android:layout_width="wrap_content"
@@ -37,7 +35,6 @@
                 android:text="Kabupaten"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
-
             <TextView
                 android:id="@+id/tv_judulDesBenPeng"
                 android:layout_width="wrap_content"
@@ -47,9 +44,357 @@
                 android:text="dd/mm/yyyy"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
-
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/linlay_datpeng1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/rellay_datpeng1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Data Pengungsi"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Balita"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linlay_datpeng2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/linlay_datpeng1">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="L:"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_lakiBalita"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="P: "
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_perempuanBalita"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_datpeng1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linlay_datpeng2"
+            android:text="Anak-anak (5-12 tahun)"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:id="@+id/linlay_datpeng3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/tv_datpeng1">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="L:"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_lakiAnak"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="P: "
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_perempuanAnak"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_datpeng2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linlay_datpeng3"
+            android:text="Remaja (13-17 tahun)"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:id="@+id/linlay_datpeng4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/tv_datpeng2">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="L:"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_lakiRemaja"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="P: "
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_perempuanRemaja"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_datpeng3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linlay_datpeng4"
+            android:text="Dewasa (18-60 tahun)"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:id="@+id/linlay_datpeng5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/tv_datpeng3">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="L:"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_lakiDewasa"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="P: "
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_perempuanDewasa"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_datpeng4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linlay_datpeng5"
+            android:text="Lansia (>60 tahun)"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:id="@+id/linlay_datpeng6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/tv_datpeng4">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="L:"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_lakiLansia"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="P: "
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+            <EditText
+                android:layout_weight="3"
+                android:id="@+id/et_perempuanLansia"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linlay_datpeng6"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/btn_toKorban"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_bg"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

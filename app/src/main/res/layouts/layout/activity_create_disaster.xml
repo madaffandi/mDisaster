@@ -47,6 +47,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="Jenis Bencana"
                         android:textAllCaps="false"
+                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
@@ -85,6 +86,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="Tanggal Kejadian"
+                        android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
@@ -114,6 +116,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="Lokasi Bencana"
+                        android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
@@ -173,6 +176,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="Akses Transportasi"
                         android:textAllCaps="false"
+                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
@@ -202,6 +206,7 @@
                         android:fontFamily="sans-serif-light"
                         android:text="Alat Transportasi"
                         android:textAllCaps="false"
+                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 

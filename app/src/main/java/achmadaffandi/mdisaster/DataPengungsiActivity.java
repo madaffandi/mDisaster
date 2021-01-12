@@ -1,7 +1,11 @@
 package achmadaffandi.mdisaster;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 public class DataPengungsiActivity extends AppCompatActivity {
 
     private TextView tv_judulBenPeng, tv_judulSubBenPeng, tv_judulDesBenPeng;
-    private String DIS_ID;
+    private EditText et_lakiBalita, et_perempuanBalita, et_lakiAnak, et_perempuanAnak, et_lakiRemaja, et_perempuanRemaja, et_lakiDewasa, et_perempuanDewasa, et_lakiLansia, et_perempuanLansia;
+    private String DIS_ID, lakiBalita, perempuanBalita, lakiAnak, perempuanAnak, lakiRemaja, perempuanRemaja, lakiDewasa, perempuanDewasa, lakiLansia, perempuanLansia;
     private DatabaseReference mDatabase;
+    private Button btn_toKorban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +32,19 @@ public class DataPengungsiActivity extends AppCompatActivity {
         tv_judulBenPeng = (TextView)findViewById(R.id.tv_judulBenPeng);
         tv_judulSubBenPeng = (TextView)findViewById(R.id.tv_judulSubBenPeng);
         tv_judulDesBenPeng = (TextView)findViewById(R.id.tv_judulDesBenPeng);
+        et_lakiBalita = (EditText)findViewById(R.id.et_lakiBalita);
+        et_lakiAnak = (EditText)findViewById(R.id.et_lakiAnak);
+        et_lakiRemaja = (EditText)findViewById(R.id.et_lakiRemaja);
+        et_lakiDewasa = (EditText)findViewById(R.id.et_lakiDewasa);
+        et_lakiLansia = (EditText)findViewById(R.id.et_lakiLansia);
+        et_perempuanBalita = (EditText)findViewById(R.id.et_perempuanBalita);
+        et_perempuanAnak = (EditText)findViewById(R.id.et_perempuanAnak);
+        et_perempuanRemaja = (EditText)findViewById(R.id.et_perempuanRemaja);
+        et_perempuanDewasa = (EditText)findViewById(R.id.et_perempuanDewasa);
+        et_perempuanLansia = (EditText)findViewById(R.id.et_perempuanLansia);
 
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.keepSynced(true);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -49,6 +65,127 @@ public class DataPengungsiActivity extends AppCompatActivity {
             }
         });
 
+        btn_toKorban = (Button)findViewById(R.id.btn_toKorban);
+        btn_toKorban.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLakiBalita(et_lakiBalita.getText().toString());
+                setLakiAnak(et_lakiAnak.getText().toString());
+                setLakiRemaja(et_lakiRemaja.getText().toString());
+                setLakiDewasa(et_lakiDewasa.getText().toString());
+                setLakiLansia(et_lakiLansia.getText().toString());
+                setPerempuanBalita(et_perempuanBalita.getText().toString());
+                setPerempuanAnak(et_perempuanAnak.getText().toString());
+                setPerempuanRemaja(et_perempuanRemaja.getText().toString());
+                setPerempuanDewasa(et_perempuanDewasa.getText().toString());
+                setPerempuanLansia(et_perempuanLansia.getText().toString());
+                updateDataPengungsi(DIS_ID, getLakiBalita(), getPerempuanBalita(),
+                        getLakiAnak(), getPerempuanAnak(),
+                        getLakiRemaja(), getPerempuanRemaja(),
+                        getLakiDewasa(), getPerempuanDewasa(),
+                        getLakiLansia(), getPerempuanLansia());
+                Intent i = new Intent(DataPengungsiActivity.this, DataKorbanActivity.class);
+                i.putExtra("DIS_ID", DIS_ID);
+                startActivity(i);
+            }
+        });
+
+    }
+
+    private void updateDataPengungsi(String DIS_ID, String lakiBalita, String perempuanBalita, String lakiAnak, String perempuanAnak,
+                                     String lakiRemaja, String perempuanRemaja, String lakiDewasa, String perempuanDewasa,
+                                     String lakiLansia, String perempuanLansia){
+        String key = DIS_ID;
+        mDatabase.child("Disaster").child(key).child("lakiBalita").setValue(lakiBalita);
+        mDatabase.child("Disaster").child(key).child("perempuanBalita").setValue(perempuanBalita);
+        mDatabase.child("Disaster").child(key).child("lakiAnak").setValue(lakiAnak);
+        mDatabase.child("Disaster").child(key).child("perempuanAnak").setValue(perempuanAnak);
+        mDatabase.child("Disaster").child(key).child("lakiRemaja").setValue(lakiRemaja);
+        mDatabase.child("Disaster").child(key).child("perempuanRemaja").setValue(perempuanRemaja);
+        mDatabase.child("Disaster").child(key).child("lakiDewasa").setValue(lakiDewasa);
+        mDatabase.child("Disaster").child(key).child("perempuanDewasa").setValue(perempuanDewasa);
+        mDatabase.child("Disaster").child(key).child("lakiLansia").setValue(lakiLansia);
+        mDatabase.child("Disaster").child(key).child("perempuanLansia").setValue(perempuanLansia);
+    }
+
+    public String getLakiBalita() {
+        return lakiBalita;
+    }
+
+    public void setLakiBalita(String lakiBalita) {
+        this.lakiBalita = lakiBalita;
+    }
+
+    public String getPerempuanBalita() {
+        return perempuanBalita;
+    }
+
+    public void setPerempuanBalita(String perempuanBalita) {
+        this.perempuanBalita = perempuanBalita;
+    }
+
+    public String getLakiAnak() {
+        return lakiAnak;
+    }
+
+    public void setLakiAnak(String lakiAnak) {
+        this.lakiAnak = lakiAnak;
+    }
+
+    public String getPerempuanAnak() {
+        return perempuanAnak;
+    }
+
+    public void setPerempuanAnak(String perempuanAnak) {
+        this.perempuanAnak = perempuanAnak;
+    }
+
+    public String getLakiRemaja() {
+        return lakiRemaja;
+    }
+
+    public void setLakiRemaja(String lakiRemaja) {
+        this.lakiRemaja = lakiRemaja;
+    }
+
+    public String getPerempuanRemaja() {
+        return perempuanRemaja;
+    }
+
+    public void setPerempuanRemaja(String perempuanRemaja) {
+        this.perempuanRemaja = perempuanRemaja;
+    }
+
+    public String getLakiDewasa() {
+        return lakiDewasa;
+    }
+
+    public void setLakiDewasa(String lakiDewasa) {
+        this.lakiDewasa = lakiDewasa;
+    }
+
+    public String getPerempuanDewasa() {
+        return perempuanDewasa;
+    }
+
+    public void setPerempuanDewasa(String perempuanDewasa) {
+        this.perempuanDewasa = perempuanDewasa;
+    }
+
+    public String getLakiLansia() {
+        return lakiLansia;
+    }
+
+    public void setLakiLansia(String lakiLansia) {
+        this.lakiLansia = lakiLansia;
+    }
+
+    public String getPerempuanLansia() {
+        return perempuanLansia;
+    }
+
+    public void setPerempuanLansia(String perempuanLansia) {
+        this.perempuanLansia = perempuanLansia;
     }
 }
 

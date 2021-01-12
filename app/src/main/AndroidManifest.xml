@@ -28,6 +28,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".DataInfrastrukturActivity"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".DataKorbanActivity"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
             android:name=".DataPengungsiActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity
