@@ -28,6 +28,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".DataPengungsiActivity"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".CreateDetailDisasterActivity"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
             android:name=".CreateDisasterActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity

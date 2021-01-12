@@ -1,6 +1,9 @@
 package achmadaffandi.mdisaster;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 public class DisDetailActivity extends AppCompatActivity {
 
     private TextView tv_judulDis, tv_subJudulDis, tv_tglKejadian, tv_latlongLokasi, tv_alamatLokasi, tv_aksesTransportasi;
-    private String receivedDisID;
+    private String DIS_ID;
     private DatabaseReference mDatabase;
+    private Button btn_lihatBencana, btn_editBencana, btn_hapusBencana;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +32,11 @@ public class DisDetailActivity extends AppCompatActivity {
         tv_latlongLokasi = (TextView) findViewById(R.id.tv_latlongLokasi);
         tv_alamatLokasi = (TextView) findViewById(R.id.tv_alamatLokasi);
         tv_aksesTransportasi = (TextView) findViewById(R.id.tv_aksesTransportasi);
+        btn_lihatBencana = (Button) findViewById(R.id.btn_lihatBencana);
+        btn_editBencana = (Button) findViewById(R.id.btn_editBencana);
+        btn_hapusBencana = (Button) findViewById(R.id.btn_hapusBencana);
 
-        receivedDisID = getIntent().getExtras().get("dis_id").toString();
-        //Toast.makeText(DisDetailActivity.this, "Item long clicked at " + receivedDisID, Toast.LENGTH_SHORT).show();
-
+        DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
         mDatabase.keepSynced(true);
 
@@ -39,7 +44,7 @@ public class DisDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (ds.getKey().equals(receivedDisID)) {
+                    if (ds.getKey().equals(DIS_ID)) {
                         tv_judulDis.setText(ds.child("jenisBencana").getValue().toString());
                         tv_subJudulDis.setText(ds.child("kabupaten").getValue().toString());
                         tv_tglKejadian.setText(ds.child("tanggalKejadian").getValue().toString());
@@ -58,5 +63,27 @@ public class DisDetailActivity extends AppCompatActivity {
             }
         });
 
+        btn_lihatBencana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //lihat bencana
+            }
+        });
+
+        btn_editBencana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DisDetailActivity.this, CreateDetailDisasterActivity.class);
+                i.putExtra("DIS_ID", DIS_ID);
+                startActivity(i);
+            }
+        });
+
+        btn_hapusBencana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //hapus bencana
+            }
+        });
     }
 }
