@@ -1,15 +1,11 @@
 package achmadaffandi.mdisaster.Model;
 
-import com.google.firebase.database.Exclude;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class DisasterData {
     private String title, description, imageId;
     private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi;
-    private String kondisiListrik, sumberListrik, kondisiAir, sumberAir, kondisiDrainase, jumlahJamban;
-    public Map<String, Boolean> stars = new HashMap<>();
+    private String rumahHancur, lakiBalita, perempuanBalita, lakiAnak, perempuanAnak, lakiRemaja, perempuanRemaja, lakiDewasa, perempuanDewasa, lakiLansia, perempuanLansia;
+    /*private String kondisiListrik, sumberListrik, kondisiAir, sumberAir, kondisiDrainase, jumlahJamban;
+    public Map<String, Boolean> stars = new HashMap<>();*/
 
     public DisasterData(String title, String description, String imageId) {
         this.title = title;
@@ -29,79 +25,96 @@ public class DisasterData {
         this.alatTransportasi = alatTransportasi;
     }
 
-    public DisasterData(String kondisiListrik, String sumberListrik, String kondisiAir, String sumberAir, String kondisiDrainase, String jumlahJamban){
-        this.kondisiListrik = kondisiListrik;
-        this.sumberListrik = sumberListrik;
-        this.kondisiAir = kondisiAir;
-        this.sumberAir = sumberAir;
-        this.kondisiDrainase = kondisiDrainase;
-        this.jumlahJamban = jumlahJamban;
-    }
-
-
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("kondisiListrik", getKondisiListrik());
-        result.put("sumberListrik", getSumberListrik());
-        result.put("kondisiAir", getKondisiAir());
-        result.put("sumberAir", getSumberAir());
-        result.put("kondisiDrainase", getKondisiDrainase());
-        result.put("jumlahJamban", getJumlahJamban());
-
-        return result;
-    }
-
     public DisasterData() {
 
     }
 
-    public String getKondisiListrik() {
-        return kondisiListrik;
+    public String getRumahHancur() {
+        return rumahHancur;
     }
 
-    public void setKondisiListrik(String kondisiListrik) {
-        this.kondisiListrik = kondisiListrik;
+    public void setRumahHancur(String rumahHancur) {
+        this.rumahHancur = rumahHancur;
     }
 
-    public String getSumberListrik() {
-        return sumberListrik;
+    public String getLakiBalita() {
+        return lakiBalita;
     }
 
-    public void setSumberListrik(String sumberListrik) {
-        this.sumberListrik = sumberListrik;
+    public void setLakiBalita(String lakiBalita) {
+        this.lakiBalita = lakiBalita;
     }
 
-    public String getKondisiAir() {
-        return kondisiAir;
+    public String getPerempuanBalita() {
+        return perempuanBalita;
     }
 
-    public void setKondisiAir(String kondisiAir) {
-        this.kondisiAir = kondisiAir;
+    public void setPerempuanBalita(String perempuanBalita) {
+        this.perempuanBalita = perempuanBalita;
     }
 
-    public String getSumberAir() {
-        return sumberAir;
+    public String getLakiAnak() {
+        return lakiAnak;
     }
 
-    public void setSumberAir(String sumberAir) {
-        this.sumberAir = sumberAir;
+    public void setLakiAnak(String lakiAnak) {
+        this.lakiAnak = lakiAnak;
     }
 
-    public String getKondisiDrainase() {
-        return kondisiDrainase;
+    public String getPerempuanAnak() {
+        return perempuanAnak;
     }
 
-    public void setKondisiDrainase(String kondisiDrainase) {
-        this.kondisiDrainase = kondisiDrainase;
+    public void setPerempuanAnak(String perempuanAnak) {
+        this.perempuanAnak = perempuanAnak;
     }
 
-    public String getJumlahJamban() {
-        return jumlahJamban;
+    public String getLakiRemaja() {
+        return lakiRemaja;
     }
 
-    public void setJumlahJamban(String jumlahJamban) {
-        this.jumlahJamban = jumlahJamban;
+    public void setLakiRemaja(String lakiRemaja) {
+        this.lakiRemaja = lakiRemaja;
+    }
+
+    public String getPerempuanRemaja() {
+        return perempuanRemaja;
+    }
+
+    public void setPerempuanRemaja(String perempuanRemaja) {
+        this.perempuanRemaja = perempuanRemaja;
+    }
+
+    public String getLakiDewasa() {
+        return lakiDewasa;
+    }
+
+    public void setLakiDewasa(String lakiDewasa) {
+        this.lakiDewasa = lakiDewasa;
+    }
+
+    public String getPerempuanDewasa() {
+        return perempuanDewasa;
+    }
+
+    public void setPerempuanDewasa(String perempuanDewasa) {
+        this.perempuanDewasa = perempuanDewasa;
+    }
+
+    public String getLakiLansia() {
+        return lakiLansia;
+    }
+
+    public void setLakiLansia(String lakiLansia) {
+        this.lakiLansia = lakiLansia;
+    }
+
+    public String getPerempuanLansia() {
+        return perempuanLansia;
+    }
+
+    public void setPerempuanLansia(String perempuanLansia) {
+        this.perempuanLansia = perempuanLansia;
     }
 
     public String getKabupaten() {

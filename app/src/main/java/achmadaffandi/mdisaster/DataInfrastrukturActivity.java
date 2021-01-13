@@ -38,7 +38,7 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.keepSynced(true);
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.child("Disaster").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {

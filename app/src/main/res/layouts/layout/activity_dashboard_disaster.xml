@@ -57,20 +57,26 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
+                <!-- contoh untuk ketika ada image
                 <ImageView
                     android:src="@drawable/logofix"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" />-->
 
                 <TextView
-                    android:textAlignment="center"
-                    android:text="Text"
-                    android:textColor="#000"
-                    android:textSize="18sp"
+                    android:text="Jumlah \nBencana"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tv_jumlahBencana"
+                    android:text="01"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -96,29 +102,26 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/logofix"
-                    android:layout_gravity="center_horizontal"
+                <TextView
+                    android:text="Total Rumah Hancur"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
-                    android:textAlignment="center"
-                    android:text="Text2"
-                    android:textColor="#000"
-                    android:textSize="18sp"
+                    android:id="@+id/tv_jumlahRumahHancur"
+                    android:text="01"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-
 
         <!-- ROW 2  -->
         <!-- COLUMN 1  -->
@@ -138,24 +141,23 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/logofix"
-                    android:layout_gravity="center_horizontal"
+                <TextView
+                    android:text="Total \nPengungsi"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
-                    android:textAlignment="center"
-                    android:text="Text3"
-                    android:textColor="#000"
-                    android:textSize="18sp"
+                    android:id="@+id/tv_jumlahPengungsi"
+                    android:text="01"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -177,24 +179,23 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/logofix"
-                    android:layout_gravity="center_horizontal"
+                <TextView
+                    android:text="Pengungsi \nLansia"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
-                    android:textAlignment="center"
-                    android:text="Text4"
-                    android:textColor="#000"
-                    android:textSize="18sp"
+                    android:id="@+id/tv_jumlahPengungsiLansia"
+                    android:text="01"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -218,24 +219,23 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/logofix"
-                    android:layout_gravity="center_horizontal"
+                <TextView
+                    android:text="Pengungsi \nBalita"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
+                    android:id="@+id/tv_jumlahPengungsiBalita"
+                    android:text="01"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Text"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -257,24 +257,23 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/logofix"
-                    android:layout_gravity="center_horizontal"
+                <TextView
+                    android:text="Pengungsi \nPerempuan"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <TextView
-                    android:textAlignment="center"
-                    android:text="Text2"
-                    android:textColor="#000"
-                    android:textSize="18sp"
+                    android:id="@+id/tv_jumlahPengungsiPerempuan"
+                    android:text="01"
+                    android:textColor="@color/blue"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
