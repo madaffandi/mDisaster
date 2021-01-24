@@ -16,5 +16,11 @@
     <string name="input_error_tanggal">masukkan tanggal kejadian dengan benar</string>
     <string name="input_error_lokasi">masukkan lokasi dengan benar</string>
     <string name="input_error_jenisbencana">masukkan jenis bencana dengan benar</string>
+    <string name="input_error_sumberlistrik">masukkan sumber listrik dengan benar</string>
+    <string name="input_error_sumberair">masukkan sumber air dengan benar</string>
+    <string name="input_error_jamban">masukkan jumlah jamban dengan benar</string>
+    <string name="input_error_pengungsi">masukkan data pengungsi dengan benar</string>
+    <string name="input_error_korban">masukkan data korban dengan benar</string>
+    <string name="input_error_infrastruktur">masukkan data infrastruktur dengan benar</string>
     <string name="map_key" translatable="false">AIzaSyBAS2_0xGKXQ5EKyAmflvRPsC4XCETnhFM</string>
 </resources>

@@ -30,9 +30,9 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_infrastruktur);
-        tv_judulBenInf = (TextView)findViewById(R.id.tv_judulBenInf);
-        tv_judulSubBenInf = (TextView)findViewById(R.id.tv_judulSubBenInf);
-        tv_judulDesBenInf = (TextView)findViewById(R.id.tv_judulDesBenInf);
+        tv_judulBenInf = (TextView) findViewById(R.id.tv_judulBenInf);
+        tv_judulSubBenInf = (TextView) findViewById(R.id.tv_judulSubBenInf);
+        tv_judulDesBenInf = (TextView) findViewById(R.id.tv_judulDesBenInf);
 
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -56,26 +56,35 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
             }
         });
 
-        et_rumahHancur = (EditText)findViewById(R.id.et_rumahHancur);
-        et_rumahRusakBerat = (EditText)findViewById(R.id.et_rumahRusakBerat);
-        et_rumahRusakRingan = (EditText)findViewById(R.id.et_rumahRusakRingan);
-        btn_toSubmitInf = (Button)findViewById(R.id.btn_toSubmitInf);
+        et_rumahHancur = (EditText) findViewById(R.id.et_rumahHancur);
+        et_rumahRusakBerat = (EditText) findViewById(R.id.et_rumahRusakBerat);
+        et_rumahRusakRingan = (EditText) findViewById(R.id.et_rumahRusakRingan);
+        btn_toSubmitInf = (Button) findViewById(R.id.btn_toSubmitInf);
         btn_toSubmitInf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setRumahHancur(et_rumahHancur.getText().toString());
-                setRumahRusakBerat(et_rumahRusakBerat.getText().toString());
-                setRumahRusakRingan(et_rumahRusakRingan.getText().toString());
-                updateDataInfrastruktur(DIS_ID, getRumahHancur(), getRumahRusakBerat(), getRumahRusakRingan());
-                Toast.makeText(DataInfrastrukturActivity.this, "Update data telah dilakukan", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(DataInfrastrukturActivity.this, DisListActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                updateKondisiInfrastruktur();
+
             }
         });
     }
 
-    private void updateDataInfrastruktur(String DIS_ID, String rumahHancur, String rumahRusakBerat, String rumahRusakRingan){
+    private void updateKondisiInfrastruktur() {
+        setRumahHancur(et_rumahHancur.getText().toString());
+        setRumahRusakBerat(et_rumahRusakBerat.getText().toString());
+        setRumahRusakRingan(et_rumahRusakRingan.getText().toString());
+        if (getRumahHancur().isEmpty() || getRumahRusakBerat().isEmpty() || getRumahRusakRingan().isEmpty()) {
+            Toast.makeText(DataInfrastrukturActivity.this, R.string.input_error_infrastruktur, Toast.LENGTH_LONG);
+        } else {
+            updateDataInfrastruktur(DIS_ID, getRumahHancur(), getRumahRusakBerat(), getRumahRusakRingan());
+            Toast.makeText(DataInfrastrukturActivity.this, "Update data telah dilakukan", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(DataInfrastrukturActivity.this, DisListActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
+    }
+
+    private void updateDataInfrastruktur(String DIS_ID, String rumahHancur, String rumahRusakBerat, String rumahRusakRingan) {
         String key = DIS_ID;
         mDatabase.child("Disaster").child(key).child("rumahHancur").setValue(rumahHancur);
         mDatabase.child("Disaster").child(key).child("rumahRusakBerat").setValue(rumahRusakBerat);

@@ -80,17 +80,37 @@ public class CreateReviewDisasterActivity extends AppCompatActivity {
         btn_toPengungsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSumberListrik(et_sumberListrik.getText().toString());
-                setSumberAir(et_sumberAir.getText().toString());
-                setJumlahJamban(et_jamban.getText().toString());
-                updateKondisiBencana(DIS_ID, kondisiListrik, getSumberListrik(), kondisiAir, getSumberAir(), kondisiDrainase, getJumlahJamban());
-                Intent i = new Intent(CreateReviewDisasterActivity.this, DataPengungsiActivity.class);
-                i.putExtra("DIS_ID", DIS_ID);
-                startActivity(i);
+                updateReviewBencana();
             }
         });
     }
-    private void updateKondisiBencana(String DIS_ID, String kondisiListrik,
+
+    private void updateReviewBencana(){
+        setSumberListrik(et_sumberListrik.getText().toString());
+        setSumberAir(et_sumberAir.getText().toString());
+        setJumlahJamban(et_jamban.getText().toString());
+        if (getSumberListrik().isEmpty()) {
+            et_sumberListrik.setError(getString(R.string.input_error_sumberlistrik));
+            et_sumberListrik.requestFocus();
+            return;
+        }
+        if (getSumberAir().isEmpty()) {
+            et_sumberAir.setError(getString(R.string.input_error_sumberair));
+            et_sumberAir.requestFocus();
+            return;
+        }
+        if (getJumlahJamban().isEmpty()) {
+            et_jamban.setError(getString(R.string.input_error_jamban));
+            et_jamban.requestFocus();
+            return;
+        }
+        updateDataBencana(DIS_ID, kondisiListrik, getSumberListrik(), kondisiAir, getSumberAir(), kondisiDrainase, getJumlahJamban());
+        Intent i = new Intent(CreateReviewDisasterActivity.this, DataPengungsiActivity.class);
+        i.putExtra("DIS_ID", DIS_ID);
+        startActivity(i);
+    }
+
+    private void updateDataBencana(String DIS_ID, String kondisiListrik,
                                       String sumberListrik, String kondisiAir, String sumberAir,
                                       String kondisiDrainase, String jumlahJamban){
         String key = DIS_ID;
