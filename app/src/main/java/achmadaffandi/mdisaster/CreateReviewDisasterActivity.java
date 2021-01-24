@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class CreateDetailDisasterActivity extends AppCompatActivity {
+public class CreateReviewDisasterActivity extends AppCompatActivity {
 
     private TextView tv_judulDis, tv_judulSubDis, tv_judulDesDis;
     private EditText et_sumberListrik, et_sumberAir, et_jamban;
@@ -32,7 +32,7 @@ public class CreateDetailDisasterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_detail_disaster);
+        setContentView(R.layout.activity_create_review_disaster);
         tv_judulDis = (TextView) findViewById(R.id.tv_judulDis);
         tv_judulSubDis = (TextView) findViewById(R.id.tv_judulSubDis);
         tv_judulDesDis = (TextView) findViewById(R.id.tv_judulDesDis);
@@ -84,13 +84,15 @@ public class CreateDetailDisasterActivity extends AppCompatActivity {
                 setSumberAir(et_sumberAir.getText().toString());
                 setJumlahJamban(et_jamban.getText().toString());
                 updateKondisiBencana(DIS_ID, kondisiListrik, getSumberListrik(), kondisiAir, getSumberAir(), kondisiDrainase, getJumlahJamban());
-                Intent i = new Intent(CreateDetailDisasterActivity.this, DataPengungsiActivity.class);
+                Intent i = new Intent(CreateReviewDisasterActivity.this, DataPengungsiActivity.class);
                 i.putExtra("DIS_ID", DIS_ID);
                 startActivity(i);
             }
         });
     }
-    private void updateKondisiBencana(String DIS_ID, String kondisiListrik, String sumberListrik, String kondisiAir, String sumberAir, String kondisiDrainase, String jumlahJamban){
+    private void updateKondisiBencana(String DIS_ID, String kondisiListrik,
+                                      String sumberListrik, String kondisiAir, String sumberAir,
+                                      String kondisiDrainase, String jumlahJamban){
         String key = DIS_ID;
         mDatabase.child("Disaster").child(key).child("kondisiListrik").setValue(kondisiListrik);
         mDatabase.child("Disaster").child(key).child("sumberListrik").setValue(sumberListrik);

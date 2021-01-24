@@ -1,8 +1,6 @@
 package achmadaffandi.mdisaster;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -10,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -150,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         startActivity(i);
                                     } else {
                                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                            Toast.makeText(getApplicationContext(), "Anda telah terdaftar", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), getString(R.string.registration_duplicate), Toast.LENGTH_SHORT).show();
                                         } else {
                                             Toast.makeText(SignUpActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
                                         }

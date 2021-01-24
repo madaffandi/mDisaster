@@ -69,7 +69,7 @@ public class DisListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         String DIS_ID = getRef(position).getKey();
-                        Intent intent = new Intent(DisListActivity.this, DisDetailActivity.class);
+                        Intent intent = new Intent(DisListActivity.this, DisReviewActivity.class);
                         intent.putExtra("DIS_ID",DIS_ID);
                         startActivity(intent);
                     }

@@ -7,8 +7,14 @@
     <string name="input_error_password_length">password tidak kurang dari 5 karakter</string>
     <string name="input_error_repassword">konfirmasi password salah</string>
     <string name="input_error_phone">masukkan nomor handphone dengan benar</string>
-    <string name="registration_success">Selamat! Anda telah terdaftar</string>
+    <string name="registration_success">Anda telah mendaftarkan relawan baru</string>
+    <string name="registration_duplicate">user yang Anda daftarkan sudah terdaftar</string>
     <string name="registration_failed">ada kesalahan, silakan ulangi kembali</string>
     <string name="login_failed">ada kesalahan, silakan ulangi kembali</string>
+    <string name="input_error_aksestrans">masukkan akses transportasi dengan benar</string>
+    <string name="input_error_alattrans">masukkan alat transportasi dengan benar</string>
+    <string name="input_error_tanggal">masukkan tanggal kejadian dengan benar</string>
+    <string name="input_error_lokasi">masukkan lokasi dengan benar</string>
+    <string name="input_error_jenisbencana">masukkan jenis bencana dengan benar</string>
     <string name="map_key" translatable="false">AIzaSyBAS2_0xGKXQ5EKyAmflvRPsC4XCETnhFM</string>
 </resources>

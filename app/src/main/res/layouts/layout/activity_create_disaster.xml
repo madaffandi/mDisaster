@@ -179,19 +179,58 @@
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
+                    <RadioGroup
+                        android:id="@+id/rg_aksestrans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <RadioButton
+                            android:id="@+id/rb_daratAkses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Darat"
+                            android:checked="true"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:paddingRight="10dp"/>
+                        <RadioButton
+                            android:id="@+id/rb_airAkses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Air"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:paddingRight="10dp"/>
+                        <RadioButton
+                            android:id="@+id/rb_udaraAkses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Udara"
+                            android:textColor="@color/white"
+                            android:buttonTint="@color/white"
+                            android:paddingRight="10dp"/>
+                    </RadioGroup>
+                </LinearLayout>
 
-                    <AutoCompleteTextView
-                        android:id="@+id/cd_aksestrans"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+                    <Spinner
+                        android:id="@+id/sp_alattrans"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/et_bg"
-                        android:fontFamily="sans-serif-light"
+                        android:entries="@array/alat_trans"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:textColor="@color/white"
-                        android:autofillHints="Darat, Air, Laut"
-                        android:textSize="15sp" />
+                        android:background="@drawable/et_bg" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -204,14 +243,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Alat Transportasi"
+                        android:text="Keterangan Lain"
                         android:textAllCaps="false"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/cd_alattrans"
+                    <EditText
+                        android:id="@+id/et_ketLain"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
@@ -220,7 +258,6 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/white"
-                        android:autofillHints="Motor, Truck, Mobil"
                         android:textSize="15sp" />
                 </LinearLayout>
 

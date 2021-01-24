@@ -2,7 +2,7 @@ package achmadaffandi.mdisaster.Model;
 
 public class DisasterData {
     private String title, description, imageId;
-    private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi;
+    private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi, keteranganLain;
     private String rumahHancur, lakiBalita, perempuanBalita, lakiAnak, perempuanAnak, lakiRemaja, perempuanRemaja, lakiDewasa, perempuanDewasa, lakiLansia, perempuanLansia;
     /*private String kondisiListrik, sumberListrik, kondisiAir, sumberAir, kondisiDrainase, jumlahJamban;
     public Map<String, Boolean> stars = new HashMap<>();*/
@@ -14,7 +14,8 @@ public class DisasterData {
     }
 
     public DisasterData(String jenisBencana, String tanggalKejadian, String latLokasi,
-                        String longLokasi, String alamat, String kabupaten, String aksesTransportasi, String alatTransportasi){
+                        String longLokasi, String alamat, String kabupaten,
+                        String aksesTransportasi, String alatTransportasi, String keteranganLain) {
         this.jenisBencana = jenisBencana;
         this.latLokasi = latLokasi;
         this.longLokasi = longLokasi;
@@ -23,6 +24,7 @@ public class DisasterData {
         this.tanggalKejadian = tanggalKejadian;
         this.aksesTransportasi = aksesTransportasi;
         this.alatTransportasi = alatTransportasi;
+        this.keteranganLain = keteranganLain;
     }
 
     public DisasterData() {
@@ -179,6 +181,14 @@ public class DisasterData {
 
     public void setAlatTransportasi(String alatTransportasi) {
         this.alatTransportasi = alatTransportasi;
+    }
+
+    public String getKeteranganLain() {
+        return keteranganLain;
+    }
+
+    public void setKeteranganLain(String keteranganLain) {
+        this.keteranganLain = keteranganLain;
     }
 
     public String getTitle() {
