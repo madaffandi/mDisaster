@@ -59,7 +59,7 @@ public class DisListActivity extends AppCompatActivity {
             protected void populateViewHolder(DisList_Holder viewHolder, DisasterData model, int position) {
                 viewHolder.setTitle(model.getJenisBencana());
                 viewHolder.setDesc(model.getKabupaten() + "\n" + model.getTanggalKejadian());
-                viewHolder.setImage(getApplicationContext(), model.getImageId());
+                viewHolder.callImage(getApplicationContext(), model.getJenisBencana());
             }
 
             @Override

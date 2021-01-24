@@ -1,17 +1,22 @@
 package achmadaffandi.mdisaster.Holder;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
 import achmadaffandi.mdisaster.R;
 
 public class DisList_Holder extends RecyclerView.ViewHolder {
 
     View mView;
+    String ikonBencana;
 
     public DisList_Holder(View itemView) {
         super(itemView);
@@ -36,12 +41,13 @@ public class DisList_Holder extends RecyclerView.ViewHolder {
     private DisList_Holder.ClickListener mClickListener;
 
     //callback interface
-    public interface ClickListener{
+    public interface ClickListener {
         public void onItemClick(View view, int position);
+
         public void onItemLongClick(View view, int position);
     }
 
-    public void setOnClickListener(DisList_Holder.ClickListener clickListener){
+    public void setOnClickListener(DisList_Holder.ClickListener clickListener) {
         mClickListener = clickListener;
     }
 
@@ -55,16 +61,31 @@ public class DisList_Holder extends RecyclerView.ViewHolder {
         post_title.setText(desc);
     }
 
-    public void setImage(Context ctx, String image) {
-        /*
-        ImageView post_img = (ImageView) mView.findViewById(R.id.dis_img);
-        Picasso.with(ctx).load(image).into(post_img);
+    public void callImage(Context ctx, String jenisBencana) {
+        if (jenisBencana.equals("Banjir")) {
+            ikonBencana = "ic_banjir";
+            setImage(ctx, ikonBencana);
+        } else if (jenisBencana.equals("Erupsi")) {
+            ikonBencana = "ic_erupsi";
+            setImage(ctx, ikonBencana);
+        } else if (jenisBencana.equals("Gempa")) {
+            ikonBencana = "ic_gempa";
+            setImage(ctx, ikonBencana);
+        } else if (jenisBencana.equals("Kebakaran")) {
+            ikonBencana = "ic_kebakaran";
+            setImage(ctx, ikonBencana);
+        } else if (jenisBencana.equals("Tanah Longsor")){
+            ikonBencana = "ic_longsor";
+            setImage(ctx, ikonBencana);
+        } else {
+            ikonBencana = "ic_lain";
+            setImage(ctx, ikonBencana);
+        }
+    }
 
-
-        Context c = this.itemView.getContext();
-        int img_id = c.getResources().getIdentifier("drawable/" + imageId, null, c.getPackageName());
+    public void setImage(Context ctx, String ikonBencana) {
         ImageView post_img = (ImageView) mView.findViewById(R.id.dis_img);
-        post_img.setImageResource(img_id);
-        */
+        int id = ctx.getResources().getIdentifier("achmadaffandi.mdisaster:drawable/" + ikonBencana, null, null);
+        post_img.setImageResource(id);
     }
 }
