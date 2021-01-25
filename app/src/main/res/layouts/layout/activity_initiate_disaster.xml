@@ -11,13 +11,13 @@
 
     <RelativeLayout
         android:id="@+id/rellay_indis1"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textGrid"
-            android:text="Inisiasi Bencana Baru"
+            android:text="Inisiasi Bencana"
             android:textSize="34sp"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
@@ -65,7 +65,20 @@
                     android:src="@drawable/ic_gempa"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="GEMPA"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -95,7 +108,20 @@
                     android:src="@drawable/ic_kebakaran"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="KEBAKARAN"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -128,7 +154,20 @@
                     android:src="@drawable/ic_banjir"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="BANJIR"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -158,7 +197,20 @@
                     android:src="@drawable/ic_longsor"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="TANAH LONGSOR"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -190,7 +242,20 @@
                     android:src="@drawable/ic_erupsi"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="ERUPSI"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -217,10 +282,23 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:src="@drawable/ic_lain"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp" />
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_lain" />
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="LAIN-LAIN"
+                        android:textColor="@color/blue"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
             </LinearLayout>
 
