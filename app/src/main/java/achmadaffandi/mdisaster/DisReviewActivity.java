@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -89,6 +90,17 @@ public class DisReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog diaBox = AskOption();
                 diaBox.show();
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.fab_assign_user);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DisReviewActivity.this, SignUpActivity.class);
+                i.putExtra("DIS_ID", DIS_ID);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
     }

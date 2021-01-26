@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
 
-
         rellay_login1 = (RelativeLayout) findViewById(R.id.rellay_login1);
         //rellay_login2 = (RelativeLayout) findViewById(R.id.rellay_login2);
         handler.postDelayed(runnable, 1500);

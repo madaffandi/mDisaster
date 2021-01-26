@@ -165,7 +165,6 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
-
                 <Button
                     android:id="@+id/btn_hapusRevBencana"
                     android:layout_width="wrap_content"
@@ -180,4 +179,15 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_assign_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/green"
+        android:src="@drawable/ic_user_icon"
+        app:borderWidth="0dp" />
 </RelativeLayout>

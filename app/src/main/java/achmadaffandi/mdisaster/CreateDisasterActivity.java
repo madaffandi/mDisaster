@@ -44,12 +44,10 @@ public class CreateDisasterActivity extends AppCompatActivity {
     private RadioGroup rg_aksestrans;
     private RadioButton rb_aksestrans;
     private Spinner sp_alattrans;
-    private String[] arrAlatTrans;
     private String jenisBencana, tglKejadian, latLokasi, longLokasi, alamat, kabupaten, aksesTrans, alatTrans, ketLain;
     private int selectedTrans;
     private DatabaseReference mDatabase;
     private TextView tvDisType, tvLatLok, tvLongLok, tvAlamat;
-    private FusedLocationProviderClient fusedLocationProviderClient;
     int PLACE_PICKER_REQUEST = 1;
 
     @Override
@@ -61,7 +59,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
         et_cd_calendar = (EditText) findViewById(R.id.et_cd_calendar);
         rg_aksestrans = (RadioGroup) findViewById(R.id.rg_aksestrans);
         sp_alattrans = (Spinner) findViewById(R.id.sp_alattrans);
-        arrAlatTrans = getResources().getStringArray(R.array.alat_trans);
         btn_toDisLoc = (Button) findViewById(R.id.btn_toDisLoc);
         tvDisType = (TextView) findViewById(R.id.tv_distype);
         tvLatLok = (TextView) findViewById(R.id.tv_lat);
@@ -69,18 +66,16 @@ public class CreateDisasterActivity extends AppCompatActivity {
         tvAlamat = (TextView) findViewById(R.id.tv_alamat);
         et_jenisBencana = (EditText) findViewById(R.id.et_jenisBencana);
         et_ketLain = (EditText)findViewById(R.id.et_ketLain);
-
         Intent i = getIntent();
         String disType = i.getStringExtra(InitiateDisasterActivity.KEY_DISTYPE);
         if (!disType.equals("Lain-lain")) {
             setJenisBencana(disType);
             tvDisType.setText(getJenisBencana());
-            et_jenisBencana.setVisibility(View.INVISIBLE);
+            et_jenisBencana.setVisibility(View.GONE);
         } else {
-            tvDisType.setVisibility(View.INVISIBLE);
+            tvDisType.setVisibility(View.GONE);
             setJenisBencana(et_jenisBencana.getText().toString());
         }
-
         et_cd_calendar.setInputType(InputType.TYPE_NULL);
         et_cd_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +83,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 showDateDialog(et_cd_calendar);
             }
         });
-
         btn_toDisLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,16 +96,11 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 }
             }
         });
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         tvLatLok.setText(getLatLokasi());
         tvLongLok.setText(getLongLokasi());
         tvAlamat.setText(getAlamat());
-
         selectedTrans = rg_aksestrans.getCheckedRadioButtonId();
         rb_aksestrans = (RadioButton)findViewById(selectedTrans);
-
         ArrayAdapter adapterAlatTrans = ArrayAdapter.createFromResource(
                 CreateDisasterActivity.this,
                 R.array.alat_trans,
@@ -149,10 +138,8 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 setTglKejadian(date_in.getText().toString());
             }
         };
-
         new DatePickerDialog(CreateDisasterActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
-
     public void createNewDisaster() {
         setAksesTrans(rb_aksestrans.getText().toString());
         setAlatTrans(sp_alattrans.getSelectedItem().toString());
@@ -176,7 +163,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
             inputDatabse();
         }
     }
-
     public void inputDatabse() {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster").push();
         DisasterData dData = new DisasterData(getJenisBencana(), getTglKejadian(),
@@ -188,7 +174,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
-
     //mendapatkan lokasi dari PlacePicker
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -216,7 +201,6 @@ public class CreateDisasterActivity extends AppCompatActivity {
             }
         }
     }
-
     public String getKetLain() {
         return ketLain;
     }
