@@ -22,8 +22,19 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/colorAccent"
         app:borderWidth="0dp"
         android:src="@drawable/ic_my_icon" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_user_dislist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/green"
+        app:borderWidth="0dp"
+        android:src="@drawable/ic_user_icon" />
 
 </RelativeLayout>

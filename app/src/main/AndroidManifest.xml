@@ -28,6 +28,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ChangePasswordActivity"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
             android:name=".DisDetailActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity

@@ -29,6 +29,7 @@ public class DisListActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private RecyclerView recyclerView;
     private String userType;
+    private FloatingActionButton fabCreateDL, fabToUserDL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +45,33 @@ public class DisListActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
         mDatabase.keepSynced(true);
+        fabToUserDL = (FloatingActionButton) findViewById(R.id.fab_user_dislist);
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 setUserType(dataSnapshot.getValue().toString());
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab_create_dislist);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabCreateDL = (FloatingActionButton) findViewById(R.id.fab_create_dislist);
+        fabCreateDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(DisListActivity.this, InitiateDisasterActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
+        fabToUserDL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DisListActivity.this, UserProfileActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }

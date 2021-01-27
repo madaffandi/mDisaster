@@ -3,9 +3,6 @@ package achmadaffandi.mdisaster.Model;
 public class DisasterData {
     private String title, description, imageId;
     private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi, keteranganLain;
-    private String rumahHancur, lakiBalita, perempuanBalita, lakiAnak, perempuanAnak, lakiRemaja, perempuanRemaja, lakiDewasa, perempuanDewasa, lakiLansia, perempuanLansia;
-    /*private String kondisiListrik, sumberListrik, kondisiAir, sumberAir, kondisiDrainase, jumlahJamban;
-    public Map<String, Boolean> stars = new HashMap<>();*/
 
     public DisasterData(String title, String description, String imageId) {
         this.title = title;
@@ -29,94 +26,6 @@ public class DisasterData {
 
     public DisasterData() {
 
-    }
-
-    public String getRumahHancur() {
-        return rumahHancur;
-    }
-
-    public void setRumahHancur(String rumahHancur) {
-        this.rumahHancur = rumahHancur;
-    }
-
-    public String getLakiBalita() {
-        return lakiBalita;
-    }
-
-    public void setLakiBalita(String lakiBalita) {
-        this.lakiBalita = lakiBalita;
-    }
-
-    public String getPerempuanBalita() {
-        return perempuanBalita;
-    }
-
-    public void setPerempuanBalita(String perempuanBalita) {
-        this.perempuanBalita = perempuanBalita;
-    }
-
-    public String getLakiAnak() {
-        return lakiAnak;
-    }
-
-    public void setLakiAnak(String lakiAnak) {
-        this.lakiAnak = lakiAnak;
-    }
-
-    public String getPerempuanAnak() {
-        return perempuanAnak;
-    }
-
-    public void setPerempuanAnak(String perempuanAnak) {
-        this.perempuanAnak = perempuanAnak;
-    }
-
-    public String getLakiRemaja() {
-        return lakiRemaja;
-    }
-
-    public void setLakiRemaja(String lakiRemaja) {
-        this.lakiRemaja = lakiRemaja;
-    }
-
-    public String getPerempuanRemaja() {
-        return perempuanRemaja;
-    }
-
-    public void setPerempuanRemaja(String perempuanRemaja) {
-        this.perempuanRemaja = perempuanRemaja;
-    }
-
-    public String getLakiDewasa() {
-        return lakiDewasa;
-    }
-
-    public void setLakiDewasa(String lakiDewasa) {
-        this.lakiDewasa = lakiDewasa;
-    }
-
-    public String getPerempuanDewasa() {
-        return perempuanDewasa;
-    }
-
-    public void setPerempuanDewasa(String perempuanDewasa) {
-        this.perempuanDewasa = perempuanDewasa;
-    }
-
-    public String getLakiLansia() {
-        return lakiLansia;
-    }
-
-    public void setLakiLansia(String lakiLansia) {
-        this.lakiLansia = lakiLansia;
-    }
-
-    public String getPerempuanLansia() {
-        return perempuanLansia;
-    }
-
-    public void setPerempuanLansia(String perempuanLansia) {
-        this.perempuanLansia = perempuanLansia;
     }
 
     public String getKabupaten() {
