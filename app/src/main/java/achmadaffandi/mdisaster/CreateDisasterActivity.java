@@ -170,7 +170,7 @@ public class CreateDisasterActivity extends AppCompatActivity {
     public void inputDatabse() {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster").push();
         DisasterData dData = new DisasterData(getJenisBencana(), getTglKejadian(),
-                getLatLokasi(), getLongLokasi(), getAlamat(), getKabupaten(), getAksesTrans(), getAlatTrans(), getKetLain());
+                getLatLokasi(), getLongLokasi(), getAlamat(), getKabupaten(), getAksesTrans(), getAlatTrans(), getKetLain(), "false");
         mDatabase.setValue(dData);
         Toast.makeText(CreateDisasterActivity.this,
                 "Data bencana baru telah ditambahkan", Toast.LENGTH_SHORT).show();

@@ -48,6 +48,7 @@ public class DisReviewActivity extends AppCompatActivity {
         fab.setVisibility(View.GONE);
         btn_editBencana.setVisibility(View.GONE);
         btn_hapusBencana.setVisibility(View.GONE);
+        btn_lihatBencana.setVisibility(View.GONE);
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
         USER_TYPE = getIntent().getExtras().get("USER_TYPE").toString();
         mDataRef = FirebaseDatabase.getInstance().getReference();
@@ -67,6 +68,10 @@ public class DisReviewActivity extends AppCompatActivity {
                         tv_alamatRevDisLokasi.setText(ds.child("alamat").getValue().toString());
                         tv_aksesRevDisTransportasi.setText(ds.child("aksesTransportasi").getValue().toString()
                                 + ", " + ds.child("alatTransportasi").getValue().toString());
+                        //hanya menampilkan tombol detail apabila data bencana sudah lengkap
+                        if(ds.child("isCompleted").getValue().toString().equals("true")){
+                            btn_lihatBencana.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }

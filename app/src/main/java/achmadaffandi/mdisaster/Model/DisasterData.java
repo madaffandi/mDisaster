@@ -2,7 +2,7 @@ package achmadaffandi.mdisaster.Model;
 
 public class DisasterData {
     private String title, description, imageId;
-    private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi, keteranganLain;
+    private String jenisBencana, latLokasi, longLokasi, alamat, kabupaten, tanggalKejadian, aksesTransportasi, alatTransportasi, keteranganLain, isCompleted;
 
     public DisasterData(String title, String description, String imageId) {
         this.title = title;
@@ -12,7 +12,8 @@ public class DisasterData {
 
     public DisasterData(String jenisBencana, String tanggalKejadian, String latLokasi,
                         String longLokasi, String alamat, String kabupaten,
-                        String aksesTransportasi, String alatTransportasi, String keteranganLain) {
+                        String aksesTransportasi, String alatTransportasi, String keteranganLain,
+                        String isCompleted) {
         this.jenisBencana = jenisBencana;
         this.latLokasi = latLokasi;
         this.longLokasi = longLokasi;
@@ -22,10 +23,19 @@ public class DisasterData {
         this.aksesTransportasi = aksesTransportasi;
         this.alatTransportasi = alatTransportasi;
         this.keteranganLain = keteranganLain;
+        this.isCompleted = isCompleted;
     }
 
     public DisasterData() {
 
+    }
+
+    public String getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(String isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     public String getKabupaten() {
