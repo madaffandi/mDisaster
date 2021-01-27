@@ -93,6 +93,7 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
         mDataDis.child(key).child("rumahHancur").setValue(rumahHancur);
         mDataDis.child(key).child("rumahRusakBerat").setValue(rumahRusakBerat);
         mDataDis.child(key).child("rumahRusakRingan").setValue(rumahRusakRingan);
+        mDataDis.child(key).child("isCompleted").setValue("true");
     }
 
     public String getRumahHancur() {
