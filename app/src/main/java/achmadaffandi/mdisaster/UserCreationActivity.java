@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -21,16 +23,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import achmadaffandi.mdisaster.Model.User;
 
-public class SignUpActivity extends AppCompatActivity {
+public class UserCreationActivity extends AppCompatActivity {
 
-    private Button btn_signup, btn_backlogin;
+    private Button btn_signup;
     private EditText su_nama, su_email, su_password, su_repassword, su_phone;
     private ProgressBar progressBar;
+    private FirebaseAuth mAuth1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_user_creation);
 
         su_nama = (EditText) findViewById(R.id.su_nama);
         su_email = (EditText) findViewById(R.id.su_email);
@@ -38,7 +41,6 @@ public class SignUpActivity extends AppCompatActivity {
         su_repassword = (EditText) findViewById(R.id.su_repassword);
         su_phone = (EditText) findViewById(R.id.su_phone);
         btn_signup = (Button) findViewById(R.id.btn_signup);
-        btn_backlogin = (Button) findViewById(R.id.btn_backlogin);
 
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
@@ -49,23 +51,18 @@ public class SignUpActivity extends AppCompatActivity {
                 registerUser();
             }
         });
-        btn_backlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
 
-    }
+        FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
+                .setDatabaseUrl("[https://mdisaster-2019.firebaseio.com]")
+                .setApiKey("AIzaSyCtSXaHBO_NSrdM4t17GBHp6jiEh7Xw7YI")
+                .setApplicationId("mdisaster-2019").build();
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            //handle the already login user
+        try { FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "AnyAppName");
+            mAuth1 = FirebaseAuth.getInstance(myApp);
+        } catch (IllegalStateException e){
+            mAuth1 = FirebaseAuth.getInstance(FirebaseApp.getInstance("AnyAppName"));
         }
+
     }
 
     private void registerUser() {
@@ -74,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = su_password.getText().toString().trim();
         String repassword = su_repassword.getText().toString().trim();
         final String phone = su_phone.getText().toString().trim();
+        final String disId = getIntent().getExtras().get("DIS_ID").toString();
         String type = "relawan";
 
         if (nama.isEmpty()) {
@@ -125,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+        mAuth1.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -138,29 +136,33 @@ public class SignUpActivity extends AppCompatActivity {
                                     type
                             );
 
+                            FirebaseDatabase.getInstance().getReference().child("UserAssign").child(getIntent().getExtras().get("DIS_ID").toString()).
+                                    child(mAuth1.getCurrentUser().getUid()).setValue("true");
                             FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(mAuth1.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(SignUpActivity.this, getString(R.string.registration_success), Toast.LENGTH_LONG).show();
-                                        Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
+                                        Toast.makeText(UserCreationActivity.this, getString(R.string.registration_success), Toast.LENGTH_LONG).show();
+                                        mAuth1.signOut();
+                                        Intent i = new Intent(UserCreationActivity.this, DisListActivity.class);
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i);
                                     } else {
                                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                             Toast.makeText(getApplicationContext(), getString(R.string.registration_duplicate), Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(SignUpActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(UserCreationActivity.this, getString(R.string.registration_failed), Toast.LENGTH_LONG).show();
                                         }
                                     }
                                 }
                             });
 
                         } else {
-                            Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(UserCreationActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

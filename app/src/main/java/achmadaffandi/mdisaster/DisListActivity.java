@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,8 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import achmadaffandi.mdisaster.Holder.DisList_Holder;
 import achmadaffandi.mdisaster.Model.DisasterData;
@@ -23,6 +28,7 @@ public class DisListActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private RecyclerView recyclerView;
+    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,17 @@ public class DisListActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
         mDatabase.keepSynced(true);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                setUserType(dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab_create_dislist);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +87,8 @@ public class DisListActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         String DIS_ID = getRef(position).getKey();
                         Intent intent = new Intent(DisListActivity.this, DisReviewActivity.class);
-                        intent.putExtra("DIS_ID",DIS_ID);
+                        intent.putExtra("DIS_ID", DIS_ID);
+                        intent.putExtra("USER_TYPE", getUserType());
                         startActivity(intent);
                     }
 
@@ -85,5 +103,13 @@ public class DisListActivity extends AppCompatActivity {
         };
 
         recyclerView.setAdapter(mAdapter);
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

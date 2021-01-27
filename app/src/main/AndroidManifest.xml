@@ -49,9 +49,6 @@
             android:name=".InitiateDisasterActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity
-            android:name=".ForgetPassActivity"
-            android:theme="@style/AppFullScreenTheme" />
-        <activity
             android:name=".IntroActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity
@@ -64,7 +61,7 @@
             android:name=".DisReviewActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".UserCreationActivity"
             android:theme="@style/AppFullScreenTheme" />
     </application>
 

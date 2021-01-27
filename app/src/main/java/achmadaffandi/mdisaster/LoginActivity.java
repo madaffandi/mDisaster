@@ -38,15 +38,12 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private DatabaseReference mUsers;
     private Button btn_login;
-    //btn_signup, btn_forgotpass;
     private RelativeLayout rellay_login1;
-    //rellay_login2;
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             rellay_login1.setVisibility(View.VISIBLE);
-            //rellay_login2.setVisibility(View.VISIBLE);
         }
     };
 
@@ -54,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+/*
         SharedPreferences sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
         if (!sp.getBoolean("first", false)) {
             SharedPreferences.Editor editor = sp.edit();
@@ -62,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.apply();
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
-        }
+        }*/
 
         mAuth = FirebaseAuth.getInstance();
         //cek apakah user sudah login
@@ -111,30 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                 userLogin();
             }
         });
-
-        /*
-        //fungsi daftar
-        btn_signup = (Button) findViewById(R.id.btn_signup);
-        btn_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
-
-        //fungsi lupa password
-        btn_forgotpass = (Button) findViewById(R.id.btn_forgotpass);
-        btn_forgotpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent (LoginActivity.this, ForgetPassActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
-        */
     }
 
     private void userLogin() {
