@@ -19,19 +19,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import achmadaffandi.mdisaster.Model.User;
-
-import static android.view.View.GONE;
 
 public class DisReviewActivity extends AppCompatActivity {
 
     private TextView tv_judulRevDis, tv_subJudulRevDis, tv_tglRevDisKejadian, tv_latlongRevDisLokasi, tv_alamatRevDisLokasi, tv_aksesRevDisTransportasi;
     private String DIS_ID, USER_TYPE;
-    private DatabaseReference mDataDisaster;
-    private boolean userAssign;
+    private DatabaseReference mDataRef, mDataDis;
     private Button btn_lihatBencana, btn_editBencana, btn_hapusBencana;
 
     @SuppressLint("RestrictedApi")
@@ -39,6 +33,7 @@ public class DisReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dis_review);
+        //deklarasi semua komponen
         tv_judulRevDis = (TextView) findViewById(R.id.tv_judulRevDis);
         tv_subJudulRevDis = (TextView) findViewById(R.id.tv_subJudulRevDis);
         tv_tglRevDisKejadian = (TextView) findViewById(R.id.tv_tglRevDisKejadian);
@@ -49,14 +44,17 @@ public class DisReviewActivity extends AppCompatActivity {
         btn_editBencana = (Button) findViewById(R.id.btn_editRevBencana);
         btn_hapusBencana = (Button) findViewById(R.id.btn_hapusRevBencana);
         FloatingActionButton fab = findViewById(R.id.fab_assign_user);
-        fab.setVisibility(GONE);
-        btn_editBencana.setVisibility(GONE);
-        btn_hapusBencana.setVisibility(GONE);
+        //menginisiasi fitur yang tidak dapat diakses dari peran tertentu untuk ditiadakan sementara
+        fab.setVisibility(View.GONE);
+        btn_editBencana.setVisibility(View.GONE);
+        btn_hapusBencana.setVisibility(View.GONE);
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
         USER_TYPE = getIntent().getExtras().get("USER_TYPE").toString();
-        mDataDisaster = FirebaseDatabase.getInstance().getReference().child("Disaster");
-        mDataDisaster.keepSynced(true);
-        mDataDisaster.addValueEventListener(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //menampilkan informasi umum
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -78,17 +76,17 @@ public class DisReviewActivity extends AppCompatActivity {
 
             }
         });
+        //melakukan pengecekan apakah pengguna ditugaskan pada bencana terkait
         FirebaseDatabase.getInstance().getReference().child("UserAssign").child(DIS_ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String tmp1 = ds.getKey();
                     String tmp2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    if(tmp1.equals(tmp2)){
-                        isUserAssign(true);
+                    if (tmp1.equals(tmp2)) {
                         btn_editBencana.setVisibility(View.VISIBLE);
                         btn_hapusBencana.setVisibility(View.VISIBLE);
-                    } else{
+                    } else {
                     }
                 }
             }
@@ -98,7 +96,7 @@ public class DisReviewActivity extends AppCompatActivity {
 
             }
         });
-
+        //menuju detail bencana
         btn_lihatBencana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +105,7 @@ public class DisReviewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        //menuju edit bencana
         btn_editBencana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +114,7 @@ public class DisReviewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        //tombol hapus bencana, memanggil konfirmasi
         btn_hapusBencana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,12 +122,13 @@ public class DisReviewActivity extends AppCompatActivity {
                 diaBox.show();
             }
         });
-        if(USER_TYPE.equals("mainAdmin")){
+        //jika tipe pengguna adalah admin, maka semua fitur terbuka kembali
+        if (USER_TYPE.equals("mainAdmin")) {
             fab.setVisibility(View.VISIBLE);
             btn_editBencana.setVisibility(View.VISIBLE);
             btn_hapusBencana.setVisibility(View.VISIBLE);
         }
-
+        //membuat pengguna baru untuk bencana terkait
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,18 +140,16 @@ public class DisReviewActivity extends AppCompatActivity {
         });
     }
 
-    private AlertDialog AskOption()
-    {
+    //konfirmasi penghapusan data
+    private AlertDialog AskOption() {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                // set message, title, and icon
                 .setTitle("Hapus")
                 .setMessage("apakah Anda yakin untuk menghapus data ini?")
                 //.setIcon(R.drawable.delete)
                 .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        //your deleting code
-                        mDataDisaster.child(DIS_ID).removeValue();
+                        //menghapus data dari database
+                        mDataDis.child(DIS_ID).removeValue();
                         Intent i = new Intent(DisReviewActivity.this, DisListActivity.class);
                         startActivity(i);
                         Toast.makeText(DisReviewActivity.this, "Data berhasil dihapus", Toast.LENGTH_SHORT).show();
@@ -166,13 +163,5 @@ public class DisReviewActivity extends AppCompatActivity {
                 })
                 .create();
         return myQuittingDialogBox;
-    }
-
-    public boolean getUserAssign() {
-        return userAssign;
-    }
-
-    public void isUserAssign(boolean userAssign) {
-        this.userAssign = userAssign;
     }
 }

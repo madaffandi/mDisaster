@@ -27,12 +27,13 @@ public class CreateReviewDisasterActivity extends AppCompatActivity {
     private Button btn_toPengungsi;
     private String DIS_ID, kondisiListrik, kondisiAir, kondisiDrainase, sumberListrik, sumberAir, jumlahJamban;
     private int selectedListrik, selectedAir, selectedDrainase;
-    private DatabaseReference mDatabase, mDatabaseDis;
+    private DatabaseReference mDataRef, mDataDis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_review_disaster);
+        //deklarasi semua komponen
         tv_judulDis = (TextView) findViewById(R.id.tv_judulDis);
         tv_judulSubDis = (TextView) findViewById(R.id.tv_judulSubDis);
         tv_judulDesDis = (TextView) findViewById(R.id.tv_judulDesDis);
@@ -43,13 +44,13 @@ public class CreateReviewDisasterActivity extends AppCompatActivity {
         rg_listrik = (RadioGroup) findViewById(R.id.rg_listrik);
         rg_air = (RadioGroup) findViewById(R.id.rg_air);
         rg_drainase = (RadioGroup) findViewById(R.id.rg_drainase);
-
+        //mendapatkan ekstra dari intent sebelumnya
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabaseDis = mDatabase.child("Disaster");
-        mDatabaseDis.keepSynced(true);
-
-        mDatabaseDis.addValueEventListener(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //mengatur informasi umum bencana, berdasarkan ID Bencana
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -66,17 +67,16 @@ public class CreateReviewDisasterActivity extends AppCompatActivity {
 
             }
         });
-
+        //mendata pilihan yang terpilih dari RadioButton
         selectedListrik = rg_listrik.getCheckedRadioButtonId();
-        rb_listrik = (RadioButton)findViewById(selectedListrik);
+        rb_listrik = (RadioButton) findViewById(selectedListrik);
         kondisiListrik = rb_listrik.getText().toString();
         selectedAir = rg_air.getCheckedRadioButtonId();
-        rb_air = (RadioButton)findViewById(selectedAir);
+        rb_air = (RadioButton) findViewById(selectedAir);
         kondisiAir = rb_air.getText().toString();
         selectedDrainase = rg_drainase.getCheckedRadioButtonId();
-        rb_drainase = (RadioButton)findViewById(selectedDrainase);
+        rb_drainase = (RadioButton) findViewById(selectedDrainase);
         kondisiDrainase = rb_drainase.getText().toString();
-
         btn_toPengungsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,10 +85,13 @@ public class CreateReviewDisasterActivity extends AppCompatActivity {
         });
     }
 
-    private void updateReviewBencana(){
+    //mendata review bencana
+    private void updateReviewBencana() {
+        //mengatur variabel yang belum terdata di onCreate
         setSumberListrik(et_sumberListrik.getText().toString());
         setSumberAir(et_sumberAir.getText().toString());
         setJumlahJamban(et_jamban.getText().toString());
+        //melakukan pengecekan data, tidak boleh kosong
         if (getSumberListrik().isEmpty()) {
             et_sumberListrik.setError(getString(R.string.input_error_sumberlistrik));
             et_sumberListrik.requestFocus();
@@ -110,16 +113,17 @@ public class CreateReviewDisasterActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    //method untuk menambahkan data ke database dengan menggunakan DIS_ID
     private void updateDataBencana(String DIS_ID, String kondisiListrik,
-                                      String sumberListrik, String kondisiAir, String sumberAir,
-                                      String kondisiDrainase, String jumlahJamban){
+                                   String sumberListrik, String kondisiAir, String sumberAir,
+                                   String kondisiDrainase, String jumlahJamban) {
         String key = DIS_ID;
-        mDatabase.child("Disaster").child(key).child("kondisiListrik").setValue(kondisiListrik);
-        mDatabase.child("Disaster").child(key).child("sumberListrik").setValue(sumberListrik);
-        mDatabase.child("Disaster").child(key).child("kondisiAir").setValue(kondisiAir);
-        mDatabase.child("Disaster").child(key).child("sumberAir").setValue(sumberAir);
-        mDatabase.child("Disaster").child(key).child("kondisiDrainase").setValue(kondisiDrainase);
-        mDatabase.child("Disaster").child(key).child("jumlahJamban").setValue(jumlahJamban);
+        mDataDis.child(key).child("kondisiListrik").setValue(kondisiListrik);
+        mDataDis.child(key).child("sumberListrik").setValue(sumberListrik);
+        mDataDis.child(key).child("kondisiAir").setValue(kondisiAir);
+        mDataDis.child(key).child("sumberAir").setValue(sumberAir);
+        mDataDis.child(key).child("kondisiDrainase").setValue(kondisiDrainase);
+        mDataDis.child(key).child("jumlahJamban").setValue(jumlahJamban);
     }
 
     public String getSumberListrik() {

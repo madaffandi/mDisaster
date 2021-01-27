@@ -1,6 +1,5 @@
 package achmadaffandi.mdisaster;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,21 +23,28 @@ public class DataKorbanActivity extends AppCompatActivity {
     private String DIS_ID, korbanMeninggal, korbanHilang, korbanLukaBerat, korbanLukaRingan;
     private EditText et_korbanMeninggal, et_korbanHilang, et_korbanLukaBerat, et_korbanLukaRingan;
     private Button btn_toInfrastruktur;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDataRef, mDataDis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_korban);
+        //deklarasi semua komponen
         tv_judulBenKor = (TextView) findViewById(R.id.tv_judulBenKor);
         tv_judulSubBenKor = (TextView) findViewById(R.id.tv_judulSubBenKor);
         tv_judulDesBenKor = (TextView) findViewById(R.id.tv_judulDesBenKor);
-
+        et_korbanMeninggal = (EditText) findViewById(R.id.et_korbanMeninggal);
+        et_korbanHilang = (EditText) findViewById(R.id.et_korbanHilang);
+        et_korbanLukaBerat = (EditText) findViewById(R.id.et_korbanLukaBerat);
+        et_korbanLukaRingan = (EditText) findViewById(R.id.et_korbanLukaRingan);
+        btn_toInfrastruktur = (Button) findViewById(R.id.btn_toInfrastruktur);
+        //mendapatkan ekstra dari intent sebelumnya yaitu ID Bencana
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.keepSynced(true);
-
-        mDatabase.child("Disaster").addValueEventListener(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //mengatur informasi umum
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -55,12 +61,6 @@ public class DataKorbanActivity extends AppCompatActivity {
 
             }
         });
-
-        et_korbanMeninggal = (EditText) findViewById(R.id.et_korbanMeninggal);
-        et_korbanHilang = (EditText) findViewById(R.id.et_korbanHilang);
-        et_korbanLukaBerat = (EditText) findViewById(R.id.et_korbanLukaBerat);
-        et_korbanLukaRingan = (EditText) findViewById(R.id.et_korbanLukaRingan);
-        btn_toInfrastruktur = (Button) findViewById(R.id.btn_toInfrastruktur);
         btn_toInfrastruktur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,14 +70,17 @@ public class DataKorbanActivity extends AppCompatActivity {
     }
 
     private void updateKondisiKorban() {
+        //mendata variabel
         setKorbanMeninggal(et_korbanMeninggal.getText().toString());
         setKorbanHilang(et_korbanHilang.getText().toString());
         setKorbanLukaBerat(et_korbanLukaBerat.getText().toString());
         setKorbanLukaRingan(et_korbanLukaRingan.getText().toString());
+        //melakukan pengecekan agar data tidak kosong
         if (getKorbanMeninggal().isEmpty() || getKorbanHilang().isEmpty() ||
                 getKorbanLukaBerat().isEmpty() || getKorbanLukaRingan().isEmpty()) {
             Toast.makeText(DataKorbanActivity.this, R.string.input_error_korban, Toast.LENGTH_LONG);
         } else {
+            //memanggil method untuk penambahan data korban
             updateDataKorban(DIS_ID, getKorbanMeninggal(), getKorbanHilang(),
                     getKorbanLukaBerat(), getKorbanLukaRingan());
             Intent i = new Intent(DataKorbanActivity.this, DataInfrastrukturActivity.class);
@@ -86,12 +89,13 @@ public class DataKorbanActivity extends AppCompatActivity {
         }
     }
 
+    //method pendambahan data korban pada database
     private void updateDataKorban(String DIS_ID, String korbanMeninggal, String korbanHilang, String korbanLukaBerat, String korbanLukaRingan) {
         String key = DIS_ID;
-        mDatabase.child("Disaster").child(key).child("korbanMeninggal").setValue(korbanMeninggal);
-        mDatabase.child("Disaster").child(key).child("korbanHilang").setValue(korbanHilang);
-        mDatabase.child("Disaster").child(key).child("korbanLukaBerat").setValue(korbanLukaBerat);
-        mDatabase.child("Disaster").child(key).child("korbanLukaRingan").setValue(korbanLukaRingan);
+        mDataDis.child(key).child("korbanMeninggal").setValue(korbanMeninggal);
+        mDataDis.child(key).child("korbanHilang").setValue(korbanHilang);
+        mDataDis.child(key).child("korbanLukaBerat").setValue(korbanLukaBerat);
+        mDataDis.child(key).child("korbanLukaRingan").setValue(korbanLukaRingan);
     }
 
     public String getKorbanMeninggal() {

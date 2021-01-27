@@ -3,9 +3,7 @@ package achmadaffandi.mdisaster;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -51,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-/*
-        SharedPreferences sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
+        //run appIntro untuk pertama kali install
+        /*SharedPreferences sp = getSharedPreferences(MyPrefs, Context.MODE_PRIVATE);
         if (!sp.getBoolean("first", false)) {
             SharedPreferences.Editor editor = sp.edit();
             editor.putBoolean("first", true);
@@ -62,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         }*/
 
         mAuth = FirebaseAuth.getInstance();
-        //cek apakah user sudah login
+        //cek apakah pengguna sudah login
         if (mAuth.getCurrentUser() != null) {
             mUsers = FirebaseDatabase.getInstance().getReference().child("Users");
             Query query = mUsers.orderByChild("email").equalTo(mAuth.getCurrentUser().getEmail());
@@ -72,11 +70,14 @@ public class LoginActivity extends AppCompatActivity {
                     for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                         User user = childSnapshot.getValue(User.class);
                         String type = user.getType();
+                        //jika peran pengguna adalah admin, maka menuju dashboard
                         if (type.equals("mainAdmin")) {
                             Intent i = new Intent(LoginActivity.this, DashboardDisasterActivity.class);
                             startActivity(i);
                             finish();
-                        } else if (type.equals("relawan")) {
+                        }
+                        //jika peran pengguna adalah relawan, maka menuju daftar bencana
+                        else if (type.equals("relawan")) {
                             Intent i = new Intent(LoginActivity.this, DisListActivity.class);
                             startActivity(i);
                             finish();
@@ -92,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
-
+        //deklarasi komponen
         rellay_login1 = (RelativeLayout) findViewById(R.id.rellay_login1);
         //rellay_login2 = (RelativeLayout) findViewById(R.id.rellay_login2);
         handler.postDelayed(runnable, 1500);
@@ -100,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
         loginpassword = (EditText) findViewById(R.id.loginpassword);
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
-
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,34 +111,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void userLogin() {
+        //mengambil data email dan password
         email = loginemail.getText().toString().trim();
         password = loginpassword.getText().toString().trim();
-
+        //melakukan pengecekan terhadap email dan password
         if (email.isEmpty()) {
             loginemail.setError(getString(R.string.input_error_email));
             loginemail.requestFocus();
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             loginemail.setError(getString(R.string.input_error_email));
             loginemail.requestFocus();
             return;
         }
-
         if (password.isEmpty()) {
             loginpassword.setError(getString(R.string.input_error_password));
             loginpassword.requestFocus();
             return;
         }
-
         if (password.length() < 6) {
             loginpassword.setError(getString(R.string.input_error_password_length));
             loginpassword.requestFocus();
             return;
         }
-
         progressBar.setVisibility(View.VISIBLE);
+        //melakukan login dengan email dan password terkait
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -151,11 +149,14 @@ public class LoginActivity extends AppCompatActivity {
                             User user = childSnapshot.getValue(User.class);
                             String type = user.getType();
                             if (task.isSuccessful()) {
+                                //jika peran pengguna adalah admin, maka dialihkan menuju dashboard
                                 if (type.equals("mainAdmin")) {
                                     Intent i = new Intent(LoginActivity.this, DashboardDisasterActivity.class);
                                     startActivity(i);
                                     finish();
-                                } else if (type.equals("relawan")) {
+                                }
+                                //jika peran pengguna adalah relawan, maka dialihkan menuju daftar bencana
+                                else if (type.equals("relawan")) {
                                     Intent i = new Intent(LoginActivity.this, DisListActivity.class);
                                     startActivity(i);
                                     finish();

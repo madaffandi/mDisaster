@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DashboardDisasterActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDataDis;
     private GridLayout gridLayout;
     private int rumah, balita, lansia, perempuan, pengungsi;
     private String jumlahBencana;
@@ -30,9 +30,8 @@ public class DashboardDisasterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_disaster);
+        //deklarasi semua komponen
         gridLayout = (GridLayout) findViewById(R.id.mainGrid);
-        setSingleEvent(gridLayout);
-
         tv_jumlahBencana = (TextView) findViewById(R.id.tv_jumlahBencana);
         tv_jumlahRumahHancur = (TextView) findViewById(R.id.tv_jumlahRumahHancur);
         tv_jumlahPengungsi = (TextView) findViewById(R.id.tv_jumlahPengungsi);
@@ -41,9 +40,10 @@ public class DashboardDisasterActivity extends AppCompatActivity {
         tv_jumlahPengungsiPerempuan = (TextView) findViewById(R.id.tv_jumlahPengungsiPerempuan);
         fabCreateDisDas = (FloatingActionButton) findViewById(R.id.fab_create_dashboard);
         fabToUserDas = (FloatingActionButton)findViewById(R.id.fab_user_dashboard);
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("Disaster").addValueEventListener(new ValueEventListener() {
+        setSingleEvent(gridLayout);
+        mDataDis = FirebaseDatabase.getInstance().getReference().child("Disaster");
+        //mendapatkan data jumlah bencana dengan menghitung ID/key dari child Disaster
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int count = 0;
@@ -58,9 +58,10 @@ public class DashboardDisasterActivity extends AppCompatActivity {
             }
         });
 
-        mDatabase.child("Disaster").addValueEventListener(new ValueEventListener() {
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //mendata jumlah rumah hancur
                 rumah = 0;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("rumahHancur").getValue() != null) {
@@ -68,6 +69,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
                     }
                     tv_jumlahRumahHancur.setText(Integer.toString(rumah));
                 }
+                //mendata jumlah pengungsi balita baik perempuan maupun laki-laki
                 balita = 0;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("lakiBalita").getValue() != null) {
@@ -78,6 +80,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
                     }
                     tv_jumlahPengungsiBalita.setText(Integer.toString(balita));
                 }
+                //mendata jumlah pengungsi perempuan dewasa dan remaja
                 perempuan = 0;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("perempuanRemaja").getValue() != null) {
@@ -88,6 +91,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
                     }
                     tv_jumlahPengungsiPerempuan.setText(Integer.toString(perempuan));
                 }
+                //mendata jumlah pengungsi lansia baik perempuan maupun laki-laki
                 lansia = 0;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("lakiLansia").getValue() != null) {
@@ -98,6 +102,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
                     }
                     tv_jumlahPengungsiLansia.setText(Integer.toString(lansia));
                 }
+                //mendata jumlah total pengungsi
                 pengungsi = 0;
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.child("lakiAnak").getValue() != null) {
@@ -122,6 +127,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
 
             }
         });
+        //menuju inisiasi bencana dari fab terkait
         fabCreateDisDas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,6 +136,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //menuju profil pengguna dari fab terkait
         fabToUserDas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,7 +146,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
             }
         });
     }
-
+    //mengarahkan ke DisListActivity untuk setiap card yang diklik
     private void setSingleEvent(GridLayout gridLayout) {
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             CardView cardView = (CardView) gridLayout.getChildAt(i);

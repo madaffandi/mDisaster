@@ -1,6 +1,5 @@
 package achmadaffandi.mdisaster;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,13 +22,14 @@ public class DataPengungsiActivity extends AppCompatActivity {
     private TextView tv_judulBenPeng, tv_judulSubBenPeng, tv_judulDesBenPeng;
     private EditText et_lakiBalita, et_perempuanBalita, et_lakiAnak, et_perempuanAnak, et_lakiRemaja, et_perempuanRemaja, et_lakiDewasa, et_perempuanDewasa, et_lakiLansia, et_perempuanLansia;
     private String DIS_ID, lakiBalita, perempuanBalita, lakiAnak, perempuanAnak, lakiRemaja, perempuanRemaja, lakiDewasa, perempuanDewasa, lakiLansia, perempuanLansia;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDataRef, mDataDis;
     private Button btn_toKorban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_pengungsi);
+        //deklarasi semua komponen
         tv_judulBenPeng = (TextView) findViewById(R.id.tv_judulBenPeng);
         tv_judulSubBenPeng = (TextView) findViewById(R.id.tv_judulSubBenPeng);
         tv_judulDesBenPeng = (TextView) findViewById(R.id.tv_judulDesBenPeng);
@@ -43,12 +43,14 @@ public class DataPengungsiActivity extends AppCompatActivity {
         et_perempuanRemaja = (EditText) findViewById(R.id.et_perempuanRemaja);
         et_perempuanDewasa = (EditText) findViewById(R.id.et_perempuanDewasa);
         et_perempuanLansia = (EditText) findViewById(R.id.et_perempuanLansia);
-
+        btn_toKorban = (Button) findViewById(R.id.btn_toKorban);
+        //mendapatkan ekstra dari intent sebelumnya yaitu ID Bencana
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.keepSynced(true);
-
-        mDatabase.child("Disaster").addValueEventListener(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //mengatur informasi umum
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -65,18 +67,16 @@ public class DataPengungsiActivity extends AppCompatActivity {
 
             }
         });
-
-        btn_toKorban = (Button) findViewById(R.id.btn_toKorban);
         btn_toKorban.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateKondisiPengungsi();
             }
         });
-
     }
 
     private void updateKondisiPengungsi() {
+        //mendata variabel
         setLakiBalita(et_lakiBalita.getText().toString());
         setLakiAnak(et_lakiAnak.getText().toString());
         setLakiRemaja(et_lakiRemaja.getText().toString());
@@ -87,6 +87,7 @@ public class DataPengungsiActivity extends AppCompatActivity {
         setPerempuanRemaja(et_perempuanRemaja.getText().toString());
         setPerempuanDewasa(et_perempuanDewasa.getText().toString());
         setPerempuanLansia(et_perempuanLansia.getText().toString());
+        //melakukan pengecekan untuk tidak mengizinkan nilai kosong
         if (getLakiBalita().isEmpty() || getLakiAnak().isEmpty() || getLakiRemaja().isEmpty() ||
                 getLakiDewasa().isEmpty() || getLakiLansia().isEmpty() ||
                 getPerempuanBalita().isEmpty() || getPerempuanAnak().isEmpty() ||
@@ -94,6 +95,7 @@ public class DataPengungsiActivity extends AppCompatActivity {
                 getPerempuanLansia().isEmpty()) {
             Toast.makeText(DataPengungsiActivity.this, R.string.input_error_pengungsi, Toast.LENGTH_LONG).show();
         } else {
+            //memanggil method penambahan data pengungsi
             updateDataPengungsi(DIS_ID, getLakiBalita(), getPerempuanBalita(),
                     getLakiAnak(), getPerempuanAnak(),
                     getLakiRemaja(), getPerempuanRemaja(),
@@ -105,20 +107,21 @@ public class DataPengungsiActivity extends AppCompatActivity {
         }
     }
 
+    //method pendambahan data pengungsi ke database
     private void updateDataPengungsi(String DIS_ID, String lakiBalita, String perempuanBalita, String lakiAnak, String perempuanAnak,
                                      String lakiRemaja, String perempuanRemaja, String lakiDewasa, String perempuanDewasa,
                                      String lakiLansia, String perempuanLansia) {
         String key = DIS_ID;
-        mDatabase.child("Disaster").child(key).child("lakiBalita").setValue(lakiBalita);
-        mDatabase.child("Disaster").child(key).child("perempuanBalita").setValue(perempuanBalita);
-        mDatabase.child("Disaster").child(key).child("lakiAnak").setValue(lakiAnak);
-        mDatabase.child("Disaster").child(key).child("perempuanAnak").setValue(perempuanAnak);
-        mDatabase.child("Disaster").child(key).child("lakiRemaja").setValue(lakiRemaja);
-        mDatabase.child("Disaster").child(key).child("perempuanRemaja").setValue(perempuanRemaja);
-        mDatabase.child("Disaster").child(key).child("lakiDewasa").setValue(lakiDewasa);
-        mDatabase.child("Disaster").child(key).child("perempuanDewasa").setValue(perempuanDewasa);
-        mDatabase.child("Disaster").child(key).child("lakiLansia").setValue(lakiLansia);
-        mDatabase.child("Disaster").child(key).child("perempuanLansia").setValue(perempuanLansia);
+        mDataDis.child(key).child("lakiBalita").setValue(lakiBalita);
+        mDataDis.child(key).child("perempuanBalita").setValue(perempuanBalita);
+        mDataDis.child(key).child("lakiAnak").setValue(lakiAnak);
+        mDataDis.child(key).child("perempuanAnak").setValue(perempuanAnak);
+        mDataDis.child(key).child("lakiRemaja").setValue(lakiRemaja);
+        mDataDis.child(key).child("perempuanRemaja").setValue(perempuanRemaja);
+        mDataDis.child(key).child("lakiDewasa").setValue(lakiDewasa);
+        mDataDis.child(key).child("perempuanDewasa").setValue(perempuanDewasa);
+        mDataDis.child(key).child("lakiLansia").setValue(lakiLansia);
+        mDataDis.child(key).child("perempuanLansia").setValue(perempuanLansia);
     }
 
     public String getLakiBalita() {

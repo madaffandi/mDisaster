@@ -27,13 +27,14 @@ public class DisDetailActivity extends AppCompatActivity {
             tv_korbanLukaBerat, tv_korbanLukaRingan, tv_rumahHancur, tv_rumahRusakBerat,
             tv_rumahRusakRingan;
     private String DIS_ID;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDataRef, mDataDis;
     private Button btn_editBencana, btn_hapusBencana;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dis_detail);
+        //deklarasi semua komponen
         tv_judulDis = (TextView) findViewById(R.id.tv_judulDisaster);
         tv_subJudulDis = (TextView) findViewById(R.id.tv_subJudulDisaster);
         tv_tglKejadian = (TextView) findViewById(R.id.tv_tglKejadian);
@@ -58,12 +59,13 @@ public class DisDetailActivity extends AppCompatActivity {
         tv_rumahRusakRingan = (TextView) findViewById(R.id.tv_rumahRusakRingan);
         btn_editBencana = (Button) findViewById(R.id.btn_editBencana);
         btn_hapusBencana = (Button) findViewById(R.id.btn_hapusBencana);
-
+        //memanggil ekstra dari intent sebelumnya yaitu ID Bencana
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
-        mDatabase.keepSynced(true);
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //memasukkan data dari database ke TextView terkait
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -115,7 +117,7 @@ public class DisDetailActivity extends AppCompatActivity {
 
             }
         });
-
+        //mengarahkan edit bencana
         btn_editBencana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +126,7 @@ public class DisDetailActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        //memanggil fungsi konfirmasi pengapusan data
         btn_hapusBencana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,18 +135,17 @@ public class DisDetailActivity extends AppCompatActivity {
             }
         });
     }
+    //fungsi konfirmasi penghapusan data
     private AlertDialog AskOption()
     {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                // set message, title, and icon
                 .setTitle("Hapus")
                 .setMessage("apakah Anda yakin untuk menghapus data ini?")
                 //.setIcon(R.drawable.delete)
                 .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        //your deleting code
-                        mDatabase.child(DIS_ID).removeValue();
+                        //menghapus data dari database
+                        mDataDis.child(DIS_ID).removeValue();
                         Intent i = new Intent(DisDetailActivity.this, DisListActivity.class);
                         startActivity(i);
                         Toast.makeText(DisDetailActivity.this, "Data berhasil dihapus", Toast.LENGTH_SHORT).show();

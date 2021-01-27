@@ -26,7 +26,7 @@ import achmadaffandi.mdisaster.Model.DisasterData;
 
 public class DisListActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDataDis, mDataRef;
     private RecyclerView recyclerView;
     private String userType;
     private FloatingActionButton fabCreateDL, fabToUserDL;
@@ -35,19 +35,21 @@ public class DisListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dis_list);
-
+        //deklarasi semua komponen
+        fabToUserDL = (FloatingActionButton) findViewById(R.id.fab_user_dislist);
+        fabCreateDL = (FloatingActionButton) findViewById(R.id.fab_create_dislist);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        //set recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(200);
         itemAnimator.setRemoveDuration(200);
         recyclerView.setItemAnimator(itemAnimator);
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster");
-        mDatabase.keepSynced(true);
-        fabToUserDL = (FloatingActionButton) findViewById(R.id.fab_user_dislist);
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //mendapatkan peran pengguna, untuk dilanjutkan ke intent berikutnya
+        mDataRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 setUserType(dataSnapshot.getValue().toString());
@@ -55,11 +57,9 @@ public class DisListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
-        fabCreateDL = (FloatingActionButton) findViewById(R.id.fab_create_dislist);
+        //menuju inisiasi bencana dari fab terkait
         fabCreateDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +68,7 @@ public class DisListActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //menuju profil pengguna dari fab terkait
         fabToUserDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +82,9 @@ public class DisListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //mengatur RecyvlerView untuk bisa memuat data dari database
         FirebaseRecyclerAdapter<DisasterData, DisList_Holder> mAdapter = new FirebaseRecyclerAdapter<DisasterData, DisList_Holder>
-                (DisasterData.class, R.layout.row_dis_list, DisList_Holder.class, mDatabase) {
+                (DisasterData.class, R.layout.row_dis_list, DisList_Holder.class, mDataDis) {
             @Override
             protected void populateViewHolder(DisList_Holder viewHolder, DisasterData model, int position) {
                 viewHolder.setTitle(model.getJenisBencana());
@@ -110,9 +112,7 @@ public class DisListActivity extends AppCompatActivity {
                 });
                 return viewHolder;
             }
-
         };
-
         recyclerView.setAdapter(mAdapter);
     }
 

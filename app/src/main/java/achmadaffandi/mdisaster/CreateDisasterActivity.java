@@ -22,8 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +37,7 @@ import achmadaffandi.mdisaster.Model.DisasterData;
 
 public class CreateDisasterActivity extends AppCompatActivity {
 
-    private Button btn_backInitateDis, btn_createDis, btn_toDisLoc;
+    private Button btn_createDis, btn_toDisLoc;
     private EditText et_cd_calendar, et_jenisBencana, et_ketLain;
     private RadioGroup rg_aksestrans;
     private RadioButton rb_aksestrans;
@@ -54,28 +52,36 @@ public class CreateDisasterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_disaster);
-        btn_backInitateDis = (Button) findViewById(R.id.btn_backInitiateDis);
-        btn_createDis = (Button) findViewById(R.id.btn_createDis);
-        et_cd_calendar = (EditText) findViewById(R.id.et_cd_calendar);
-        rg_aksestrans = (RadioGroup) findViewById(R.id.rg_aksestrans);
-        sp_alattrans = (Spinner) findViewById(R.id.sp_alattrans);
-        btn_toDisLoc = (Button) findViewById(R.id.btn_toDisLoc);
+        //deklarasi semua komponen
         tvDisType = (TextView) findViewById(R.id.tv_distype);
+        et_jenisBencana = (EditText) findViewById(R.id.et_jenisBencana);
+        et_cd_calendar = (EditText) findViewById(R.id.et_cd_calendar);
+        btn_toDisLoc = (Button) findViewById(R.id.btn_toDisLoc);
         tvLatLok = (TextView) findViewById(R.id.tv_lat);
         tvLongLok = (TextView) findViewById(R.id.tv_lng);
         tvAlamat = (TextView) findViewById(R.id.tv_alamat);
-        et_jenisBencana = (EditText) findViewById(R.id.et_jenisBencana);
-        et_ketLain = (EditText)findViewById(R.id.et_ketLain);
+        rg_aksestrans = (RadioGroup) findViewById(R.id.rg_aksestrans);
+        sp_alattrans = (Spinner) findViewById(R.id.sp_alattrans);
+        et_ketLain = (EditText) findViewById(R.id.et_ketLain);
+        btn_createDis = (Button) findViewById(R.id.btn_createDis);
+        //menghilangkan TextView alamat untuk sementara
+        tvLatLok.setVisibility(View.GONE);
+        tvLongLok.setVisibility(View.GONE);
+        tvAlamat.setVisibility(View.GONE);
+        //memanggil extra dari intent sebelumnya yaitu tipe bencana
         Intent i = getIntent();
         String disType = i.getStringExtra(InitiateDisasterActivity.KEY_DISTYPE);
         if (!disType.equals("Lain-lain")) {
+            //memuat jenis bencana ke TextView
             setJenisBencana(disType);
             tvDisType.setText(getJenisBencana());
             et_jenisBencana.setVisibility(View.GONE);
         } else {
+            //memunculkan EditText untuk jenis bencana yang belum didefinisikan (lain-lain)
             tvDisType.setVisibility(View.GONE);
             setJenisBencana(et_jenisBencana.getText().toString());
         }
+        //inisiasi calendar
         et_cd_calendar.setInputType(InputType.TYPE_NULL);
         et_cd_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +89,7 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 showDateDialog(et_cd_calendar);
             }
         });
+        //memanggil PlacePicker dari Button
         btn_toDisLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,35 +103,26 @@ public class CreateDisasterActivity extends AppCompatActivity {
                 }
             }
         });
-        tvLatLok.setText(getLatLokasi());
-        tvLongLok.setText(getLongLokasi());
-        tvAlamat.setText(getAlamat());
+        //mendapatkan data akses transportasi
         selectedTrans = rg_aksestrans.getCheckedRadioButtonId();
-        rb_aksestrans = (RadioButton)findViewById(selectedTrans);
+        rb_aksestrans = (RadioButton) findViewById(selectedTrans);
+        //memuat spinner alat transportasi
         ArrayAdapter adapterAlatTrans = ArrayAdapter.createFromResource(
                 CreateDisasterActivity.this,
                 R.array.alat_trans,
                 R.layout.spinner_layout);
         adapterAlatTrans.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         sp_alattrans.setAdapter(adapterAlatTrans);
-
+        //memanggil fungsi membuat bencana baru dari button
         btn_createDis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createNewDisaster();
             }
         });
-
-        btn_backInitateDis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(CreateDisasterActivity.this, InitiateDisasterActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
     }
 
+    //menampilkan Date Dialog, pengaturan tanggal kejadian bencana
     private void showDateDialog(final EditText date_in) {
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -140,10 +138,14 @@ public class CreateDisasterActivity extends AppCompatActivity {
         };
         new DatePickerDialog(CreateDisasterActivity.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
+
+    //fungsi membuat bencana baru
     public void createNewDisaster() {
+        //memanggil data yang belum dipanggil di onCreate
         setAksesTrans(rb_aksestrans.getText().toString());
         setAlatTrans(sp_alattrans.getSelectedItem().toString());
         setKetLain(et_ketLain.getText().toString());
+        //melakukan pengecekan terhadap setiap data yang dimasukkan
         if (getJenisBencana() == null) {
             et_jenisBencana.setError(getString(R.string.input_error_jenisbencana));
             et_jenisBencana.requestFocus();
@@ -156,13 +158,15 @@ public class CreateDisasterActivity extends AppCompatActivity {
             Toast.makeText(CreateDisasterActivity.this, R.string.input_error_aksestrans, Toast.LENGTH_LONG).show();
         } else if (getAlatTrans().isEmpty()) {
             Toast.makeText(CreateDisasterActivity.this, R.string.input_error_alattrans, Toast.LENGTH_LONG).show();
-        } else if (getKetLain().isEmpty()){
+        } else if (getKetLain().isEmpty()) {
             setKetLain("-");
             inputDatabse();
         } else {
             inputDatabse();
         }
     }
+
+    //fungsi memasukkan data bencana awal ke database
     public void inputDatabse() {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Disaster").push();
         DisasterData dData = new DisasterData(getJenisBencana(), getTglKejadian(),
@@ -174,6 +178,7 @@ public class CreateDisasterActivity extends AppCompatActivity {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
+
     //mendapatkan lokasi dari PlacePicker
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -191,6 +196,9 @@ public class CreateDisasterActivity extends AppCompatActivity {
                         setLongLokasi(String.valueOf(addresses.get(0).getLongitude()));
                         setAlamat(String.valueOf(addresses.get(0).getAddressLine(0)));
                         setKabupaten(String.valueOf(addresses.get(0).getLocality()));
+                        tvLongLok.setVisibility(View.VISIBLE);
+                        tvLatLok.setVisibility(View.VISIBLE);
+                        tvAlamat.setVisibility(View.VISIBLE);
                         tvLatLok.setText(getLongLokasi());
                         tvLongLok.setText(getLatLokasi());
                         tvAlamat.setText(getAlamat());
@@ -201,6 +209,7 @@ public class CreateDisasterActivity extends AppCompatActivity {
             }
         }
     }
+    //setter dan getter yang diperlukan untuk memuat objek
     public String getKetLain() {
         return ketLain;
     }

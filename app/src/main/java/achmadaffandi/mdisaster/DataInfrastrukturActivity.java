@@ -1,6 +1,5 @@
 package achmadaffandi.mdisaster;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,21 +23,27 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
     private String DIS_ID, rumahHancur, rumahRusakBerat, rumahRusakRingan;
     private EditText et_rumahHancur, et_rumahRusakBerat, et_rumahRusakRingan;
     private Button btn_toSubmitInf;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDataRef, mDataDis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_infrastruktur);
+        //deklarasi semua komponen
         tv_judulBenInf = (TextView) findViewById(R.id.tv_judulBenInf);
         tv_judulSubBenInf = (TextView) findViewById(R.id.tv_judulSubBenInf);
         tv_judulDesBenInf = (TextView) findViewById(R.id.tv_judulDesBenInf);
-
+        et_rumahHancur = (EditText) findViewById(R.id.et_rumahHancur);
+        et_rumahRusakBerat = (EditText) findViewById(R.id.et_rumahRusakBerat);
+        et_rumahRusakRingan = (EditText) findViewById(R.id.et_rumahRusakRingan);
+        btn_toSubmitInf = (Button) findViewById(R.id.btn_toSubmitInf);
+        //mendapatkan ekstra dari intent sebelumnya yaitu ID Bencana
         DIS_ID = getIntent().getExtras().get("DIS_ID").toString();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.keepSynced(true);
-
-        mDatabase.child("Disaster").addValueEventListener(new ValueEventListener() {
+        mDataRef = FirebaseDatabase.getInstance().getReference();
+        mDataRef.keepSynced(true);
+        mDataDis = mDataRef.child("Disaster");
+        //mengatur informasi umum
+        mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -55,11 +60,6 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
 
             }
         });
-
-        et_rumahHancur = (EditText) findViewById(R.id.et_rumahHancur);
-        et_rumahRusakBerat = (EditText) findViewById(R.id.et_rumahRusakBerat);
-        et_rumahRusakRingan = (EditText) findViewById(R.id.et_rumahRusakRingan);
-        btn_toSubmitInf = (Button) findViewById(R.id.btn_toSubmitInf);
         btn_toSubmitInf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,12 +70,15 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
     }
 
     private void updateKondisiInfrastruktur() {
+        //mendata variabel
         setRumahHancur(et_rumahHancur.getText().toString());
         setRumahRusakBerat(et_rumahRusakBerat.getText().toString());
         setRumahRusakRingan(et_rumahRusakRingan.getText().toString());
+        //melakukan pengecekan data, tidak boleh kosong
         if (getRumahHancur().isEmpty() || getRumahRusakBerat().isEmpty() || getRumahRusakRingan().isEmpty()) {
             Toast.makeText(DataInfrastrukturActivity.this, R.string.input_error_infrastruktur, Toast.LENGTH_LONG);
         } else {
+            //memanggil method penambahan data pada database
             updateDataInfrastruktur(DIS_ID, getRumahHancur(), getRumahRusakBerat(), getRumahRusakRingan());
             Toast.makeText(DataInfrastrukturActivity.this, "Update data telah dilakukan", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(DataInfrastrukturActivity.this, DisListActivity.class);
@@ -84,11 +87,12 @@ public class DataInfrastrukturActivity extends AppCompatActivity {
         }
     }
 
+    //method menambahkan data infrastruktur pada database
     private void updateDataInfrastruktur(String DIS_ID, String rumahHancur, String rumahRusakBerat, String rumahRusakRingan) {
         String key = DIS_ID;
-        mDatabase.child("Disaster").child(key).child("rumahHancur").setValue(rumahHancur);
-        mDatabase.child("Disaster").child(key).child("rumahRusakBerat").setValue(rumahRusakBerat);
-        mDatabase.child("Disaster").child(key).child("rumahRusakRingan").setValue(rumahRusakRingan);
+        mDataDis.child(key).child("rumahHancur").setValue(rumahHancur);
+        mDataDis.child(key).child("rumahRusakBerat").setValue(rumahRusakBerat);
+        mDataDis.child(key).child("rumahRusakRingan").setValue(rumahRusakRingan);
     }
 
     public String getRumahHancur() {

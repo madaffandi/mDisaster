@@ -34,14 +34,13 @@ public class UserCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_creation);
-
+        //deklarasi semua komponen
         su_nama = (EditText) findViewById(R.id.su_nama);
         su_email = (EditText) findViewById(R.id.su_email);
         su_password = (EditText) findViewById(R.id.su_password);
         su_repassword = (EditText) findViewById(R.id.su_repassword);
         su_phone = (EditText) findViewById(R.id.su_phone);
         btn_signup = (Button) findViewById(R.id.btn_signup);
-
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
 
@@ -51,21 +50,22 @@ public class UserCreationActivity extends AppCompatActivity {
                 registerUser();
             }
         });
-
+        //menggunakan aplikasi baru untuk membuat akun lain agar tetap bisa menggunakan akun utama
         FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
                 .setDatabaseUrl("[https://mdisaster-2019.firebaseio.com]")
                 .setApiKey("AIzaSyCtSXaHBO_NSrdM4t17GBHp6jiEh7Xw7YI")
                 .setApplicationId("mdisaster-2019").build();
-
-        try { FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "AnyAppName");
+        try {
+            FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "AnyAppName");
             mAuth1 = FirebaseAuth.getInstance(myApp);
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             mAuth1 = FirebaseAuth.getInstance(FirebaseApp.getInstance("AnyAppName"));
         }
-
     }
 
+    //fungsi mendaftarkan pengguna
     private void registerUser() {
+        //menginisasi variabel
         final String nama = su_nama.getText().toString().trim();
         final String email = su_email.getText().toString().trim();
         String password = su_password.getText().toString().trim();
@@ -73,71 +73,64 @@ public class UserCreationActivity extends AppCompatActivity {
         final String phone = su_phone.getText().toString().trim();
         final String disId = getIntent().getExtras().get("DIS_ID").toString();
         String type = "relawan";
-
+        //melakukan pengecekan untuk data yang tidak sesuai
         if (nama.isEmpty()) {
             su_nama.setError(getString(R.string.input_error_nama));
             su_nama.requestFocus();
             return;
         }
-
         if (email.isEmpty()) {
             su_email.setError(getString(R.string.input_error_email));
             su_email.requestFocus();
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             su_email.setError(getString(R.string.input_error_email));
             su_email.requestFocus();
             return;
         }
-
         if (password.isEmpty()) {
             su_password.setError(getString(R.string.input_error_password));
             su_password.requestFocus();
             return;
         }
-
         if (password.length() < 6) {
             su_password.setError(getString(R.string.input_error_password_length));
             su_password.requestFocus();
             return;
         }
-
         if (!repassword.equals(password)) {
             su_repassword.setError(getString(R.string.input_error_repassword));
             su_repassword.requestFocus();
             return;
         }
-
         if (phone.isEmpty()) {
             su_phone.setError(getString(R.string.input_error_phone));
             su_phone.requestFocus();
             return;
         }
-
         if (phone.length() < 9) {
             su_phone.setError(getString(R.string.input_error_phone));
             su_phone.requestFocus();
             return;
         }
-
         progressBar.setVisibility(View.VISIBLE);
+        //membuat user baru dengan data terkait
         mAuth1.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             User user = new User(
                                     nama,
                                     email,
                                     phone,
                                     type
                             );
-
+                            //menugaskan pengguna sesuai bencana terkait pada database
                             FirebaseDatabase.getInstance().getReference().child("UserAssign").child(getIntent().getExtras().get("DIS_ID").toString()).
                                     child(mAuth1.getCurrentUser().getUid()).setValue("true");
+                            //membuat objek user baru pada database
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(mAuth1.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -159,15 +152,11 @@ public class UserCreationActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(UserCreationActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-
     }
-
-
 }

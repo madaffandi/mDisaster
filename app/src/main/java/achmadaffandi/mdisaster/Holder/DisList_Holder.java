@@ -1,15 +1,12 @@
 package achmadaffandi.mdisaster.Holder;
 
-import android.content.Context;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.media.Image;
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import achmadaffandi.mdisaster.R;
 
@@ -40,7 +37,6 @@ public class DisList_Holder extends RecyclerView.ViewHolder {
 
     private DisList_Holder.ClickListener mClickListener;
 
-    //callback interface
     public interface ClickListener {
         public void onItemClick(View view, int position);
 
@@ -61,6 +57,7 @@ public class DisList_Holder extends RecyclerView.ViewHolder {
         post_title.setText(desc);
     }
 
+    //menerjemahkan jenis bencana untuk mengatur icon bencana
     public void callImage(Context ctx, String jenisBencana) {
         if (jenisBencana.equals("Banjir")) {
             ikonBencana = "ic_banjir";
@@ -74,7 +71,7 @@ public class DisList_Holder extends RecyclerView.ViewHolder {
         } else if (jenisBencana.equals("Kebakaran")) {
             ikonBencana = "ic_kebakaran";
             setImage(ctx, ikonBencana);
-        } else if (jenisBencana.equals("Tanah Longsor")){
+        } else if (jenisBencana.equals("Tanah Longsor")) {
             ikonBencana = "ic_longsor";
             setImage(ctx, ikonBencana);
         } else {
@@ -83,6 +80,7 @@ public class DisList_Holder extends RecyclerView.ViewHolder {
         }
     }
 
+    //mengatur icon bencana
     public void setImage(Context ctx, String ikonBencana) {
         ImageView post_img = (ImageView) mView.findViewById(R.id.dis_img);
         int id = ctx.getResources().getIdentifier("achmadaffandi.mdisaster:drawable/" + ikonBencana, null, null);
