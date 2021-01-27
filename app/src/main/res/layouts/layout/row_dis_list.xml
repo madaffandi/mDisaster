@@ -32,7 +32,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/dis_img"
             android:text="Title"
-            android:textSize="30sp" />
+            android:textStyle="bold"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/dis_desc"

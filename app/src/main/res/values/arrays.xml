@@ -1,11 +1,11 @@
 <resources>
-    <string-array name="akses_trans">
-        <item>Kapal</item>
-        <item>Udara</item>
-    </string-array>
     <string-array name="alat_trans">
         <item>Motor</item>
         <item>Mobil</item>
         <item>Truck</item>
+        <item>Kapal</item>
+        <item>Perahu</item>
+        <item>Pesawat</item>
+        <item>Drone</item>
     </string-array>
 </resources>
