@@ -61,22 +61,22 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }*/
 
-if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.LOLLIPOP){
-    //memberikan peringatan untuk versi Android
-    AlertDialog checkAndroidVersion = new AlertDialog.Builder(this)
-            .setTitle("Peringatan")
-            .setMessage("versi Android Anda tidak direkomendasikan, " +
-                    "gunakan API 23 (Marsmellow) ke atas")
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    finish();
-                    System.exit(0);
-                    dialog.dismiss();
-                }
-            })
-            .create();
-    checkAndroidVersion.show();
-}
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            //memberikan peringatan untuk versi Android
+            AlertDialog checkAndroidVersion = new AlertDialog.Builder(this)
+                    .setTitle("Peringatan")
+                    .setMessage("versi Android Anda tidak direkomendasikan, " +
+                            "gunakan API 23 (Marshmallow) ke atas")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                            System.exit(0);
+                            dialog.dismiss();
+                        }
+                    })
+                    .create();
+            checkAndroidVersion.show();
+        }
 
         mAuth = FirebaseAuth.getInstance();
         //cek apakah pengguna sudah login
