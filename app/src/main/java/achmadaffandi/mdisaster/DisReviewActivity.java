@@ -69,7 +69,7 @@ public class DisReviewActivity extends AppCompatActivity {
                         tv_aksesRevDisTransportasi.setText(ds.child("aksesTransportasi").getValue().toString()
                                 + ", " + ds.child("alatTransportasi").getValue().toString());
                         //hanya menampilkan tombol detail apabila data bencana sudah lengkap
-                        if(ds.child("isCompleted").getValue().toString().equals("true")){
+                        if (ds.child("isCompleted").getValue().toString().equals("true")) {
                             btn_lihatBencana.setVisibility(View.VISIBLE);
                         }
                     }
@@ -82,25 +82,26 @@ public class DisReviewActivity extends AppCompatActivity {
             }
         });
         //melakukan pengecekan apakah pengguna ditugaskan pada bencana terkait
-        FirebaseDatabase.getInstance().getReference().child("UserAssign").child(DIS_ID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String tmp1 = ds.getKey();
-                    String tmp2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    if (tmp1.equals(tmp2)) {
-                        btn_editBencana.setVisibility(View.VISIBLE);
-                        btn_hapusBencana.setVisibility(View.VISIBLE);
-                    } else {
+        FirebaseDatabase.getInstance().getReference().child("UserAssign").child(DIS_ID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String tmp1 = ds.getKey();
+                            String tmp2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            if (tmp1.equals(tmp2)) {
+                                btn_editBencana.setVisibility(View.VISIBLE);
+                                btn_hapusBencana.setVisibility(View.VISIBLE);
+                            } else {
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                    }
+                });
         //menuju detail bencana
         btn_lihatBencana.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +115,8 @@ public class DisReviewActivity extends AppCompatActivity {
         btn_editBencana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DisReviewActivity.this, CreateReviewDisasterActivity.class);
+                Intent i = new Intent(DisReviewActivity.this,
+                        CreateReviewDisasterActivity.class);
                 i.putExtra("DIS_ID", DIS_ID);
                 startActivity(i);
             }
@@ -155,9 +157,11 @@ public class DisReviewActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //menghapus data dari database
                         mDataDis.child(DIS_ID).removeValue();
-                        Intent i = new Intent(DisReviewActivity.this, DisListActivity.class);
+                        Intent i = new Intent(DisReviewActivity.this,
+                                DisListActivity.class);
                         startActivity(i);
-                        Toast.makeText(DisReviewActivity.this, "Data berhasil dihapus", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DisReviewActivity.this, "Data berhasil dihapus",
+                                Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 })

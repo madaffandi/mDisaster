@@ -39,7 +39,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
         tv_jumlahPengungsiBalita = (TextView) findViewById(R.id.tv_jumlahPengungsiBalita);
         tv_jumlahPengungsiPerempuan = (TextView) findViewById(R.id.tv_jumlahPengungsiPerempuan);
         fabCreateDisDas = (FloatingActionButton) findViewById(R.id.fab_create_dashboard);
-        fabToUserDas = (FloatingActionButton)findViewById(R.id.fab_user_dashboard);
+        fabToUserDas = (FloatingActionButton) findViewById(R.id.fab_user_dashboard);
         setSingleEvent(gridLayout);
         mDataDis = FirebaseDatabase.getInstance().getReference().child("Disaster");
         //mendapatkan data jumlah bencana dengan menghitung ID/key dari child Disaster
@@ -146,6 +146,7 @@ public class DashboardDisasterActivity extends AppCompatActivity {
             }
         });
     }
+
     //mengarahkan ke DisListActivity untuk setiap card yang diklik
     private void setSingleEvent(GridLayout gridLayout) {
         for (int i = 0; i < gridLayout.getChildCount(); i++) {

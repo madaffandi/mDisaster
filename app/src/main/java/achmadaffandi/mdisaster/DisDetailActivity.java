@@ -64,7 +64,7 @@ public class DisDetailActivity extends AppCompatActivity {
         mDataRef = FirebaseDatabase.getInstance().getReference();
         mDataRef.keepSynced(true);
         mDataDis = mDataRef.child("Disaster");
-        //memasukkan data dari database ke TextView terkait
+//memasukkan data dari database ke TextView terkait
         mDataDis.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,10 +101,10 @@ public class DisDetailActivity extends AppCompatActivity {
                                 + " laki-laki, \n" + ds.child("perempuanLansia").getValue().toString()
                                 + " perempuan");
                         tv_korbanMeninggal.setText(ds.child("korbanMeninggal").getValue().toString()
-                        +" orang");
-                        tv_korbanHilang.setText(ds.child("korbanHilang").getValue().toString()+" orang");
-                        tv_korbanLukaBerat.setText(ds.child("korbanLukaBerat").getValue().toString()+" orang");
-                        tv_korbanLukaRingan.setText(ds.child("korbanLukaRingan").getValue().toString()+" orang");
+                                + " orang");
+                        tv_korbanHilang.setText(ds.child("korbanHilang").getValue().toString() + " orang");
+                        tv_korbanLukaBerat.setText(ds.child("korbanLukaBerat").getValue().toString() + " orang");
+                        tv_korbanLukaRingan.setText(ds.child("korbanLukaRingan").getValue().toString() + " orang");
                         tv_rumahHancur.setText(ds.child("rumahHancur").getValue().toString());
                         tv_rumahRusakBerat.setText(ds.child("rumahRusakBerat").getValue().toString());
                         tv_rumahRusakRingan.setText(ds.child("rumahRusakRingan").getValue().toString());
@@ -135,9 +135,9 @@ public class DisDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     //fungsi konfirmasi penghapusan data
-    private AlertDialog AskOption()
-    {
+    private AlertDialog AskOption() {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
                 .setTitle("Hapus")
                 .setMessage("apakah Anda yakin untuk menghapus data ini?")

@@ -1,8 +1,10 @@
 package achmadaffandi.mdisaster;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
@@ -58,6 +60,23 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }*/
+
+if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.LOLLIPOP){
+    //memberikan peringatan untuk versi Android
+    AlertDialog checkAndroidVersion = new AlertDialog.Builder(this)
+            .setTitle("Peringatan")
+            .setMessage("versi Android Anda tidak direkomendasikan, " +
+                    "gunakan API 23 (Marsmellow) ke atas")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    finish();
+                    System.exit(0);
+                    dialog.dismiss();
+                }
+            })
+            .create();
+    checkAndroidVersion.show();
+}
 
         mAuth = FirebaseAuth.getInstance();
         //cek apakah pengguna sudah login

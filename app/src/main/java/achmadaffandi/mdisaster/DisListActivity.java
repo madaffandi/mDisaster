@@ -49,16 +49,18 @@ public class DisListActivity extends AppCompatActivity {
         mDataRef.keepSynced(true);
         mDataDis = mDataRef.child("Disaster");
         //mendapatkan peran pengguna, untuk dilanjutkan ke intent berikutnya
-        mDataRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                setUserType(dataSnapshot.getValue().toString());
-            }
+        mDataRef.child("Users").child(FirebaseAuth.getInstance()
+                .getCurrentUser().getUid()).child("type")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        setUserType(dataSnapshot.getValue().toString());
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
         //menuju inisiasi bencana dari fab terkait
         fabCreateDL.setOnClickListener(new View.OnClickListener() {
             @Override

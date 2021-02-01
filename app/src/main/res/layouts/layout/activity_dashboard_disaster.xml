@@ -61,12 +61,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!-- contoh untuk ketika ada image
-                <ImageView
-                    android:src="@drawable/logofix"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />-->
 
                 <TextView
                     android:text="Jumlah \nBencana"
